@@ -5,12 +5,16 @@
 
 class ImGuiController
 {
-public:
-	ImGuiController() {	}
-	~ImGuiController() {	}
+	bool* inspectorWindow = NULL;
 
-	void Render(int& activeSimulation);
+public:
+	ImGuiController() { }
+	~ImGuiController() { }
+
+	void Render();
 
 private:
-	void RenderMainMenuBar(int& activeSimulation);
+	void RenderMainMenuBar();
+	void RenderEditMode();
+	void RenderPathFindingMode();
 };

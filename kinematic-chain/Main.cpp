@@ -30,7 +30,7 @@ float delta_time = 0.0f;
 float last_frame = 0.0f;
 
 std::shared_ptr<SceneController> sceneController;
-bool show_demo_window = true;
+bool show_demo_window = false;
 
 int main()
 {

@@ -7,6 +7,8 @@ SceneController::SceneController()
 
 	shader = std::make_shared<Shader>("AxesShader.vs", "AxesShader.fs");
 
+	imGuiController = std::make_shared<ImGuiController>();
+	
 	axes = std::make_shared<Axes>();
 	axes->SetShader(shader);
 }
@@ -41,5 +43,5 @@ void SceneController::Render(float deltaTime)
 
 void SceneController::RenderImGui()
 {
-	imGuiController->Render(mode);
+	imGuiController->Render();
 }

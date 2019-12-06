@@ -1,32 +1,47 @@
 #include "ImGuiController.h"
+#include "..//Utils/WindowConstants.h"
 
-void ImGuiController::Render(int& mode)
+void ImGuiController::Render()
 {
-	RenderMainMenuBar(mode);
+	RenderMainMenuBar();
 
-	switch (mode)
+	ImGui::Begin("Inspector", inspectorWindow);
+
+	if (ImGui::BeginTabBar("ModeTabBar", ImGuiTabBarFlags_None))
 	{
-	case 0:	break;
-	case 1:	break;
-	default: break;
+		if (ImGui::BeginTabItem("Edit"))
+		{
+			RenderEditMode();
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("PathFinding"))
+		{
+			RenderPathFindingMode();
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
 	}
+
+	ImGui::End();
 }
 
-void ImGuiController::RenderMainMenuBar(int& mode)
+void ImGuiController::RenderMainMenuBar()
 {
 	if (ImGui::BeginMainMenuBar())
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS) | ", 1000.0f / io.Framerate, io.Framerate);
 
-		if (ImGui::BeginMenu("Open"))
-		{
-			ImGui::RadioButton("Edit mode", &mode, 0);
-			ImGui::RadioButton("Path finding", &mode, 1);
-
-			ImGui::EndMenu();
-		}
-
 		ImGui::EndMainMenuBar();
 	}
+}
+
+void ImGuiController::RenderEditMode()
+{
+	ImGui::Text("Edit mode");
+}
+
+void ImGuiController::RenderPathFindingMode()
+{
+	ImGui::Text("Path finding mode");
 }

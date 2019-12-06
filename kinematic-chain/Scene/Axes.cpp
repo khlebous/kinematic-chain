@@ -28,10 +28,10 @@ void Axes::GenerateBuffors()
 {
 	float vert_basic[] =
 	{
-		0.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+		-1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
 		1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
 
-		0.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+		0.0f, -1.0f,   0.0f, 1.0f, 0.0f,
 		0.0f, 1.0f,   0.0f, 1.0f, 0.0f,
 	};
 
