@@ -11,5 +11,4 @@ Obstacle& Obstacle::operator=(const Obstacle& o)
 void Obstacle::SetSize(glm::vec2 _s)
 {
 	model->SetSize(_s);
-	view->UpdateVerticesView();
 }

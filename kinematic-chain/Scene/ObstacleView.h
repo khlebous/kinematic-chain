@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "ObstacleModel.h"
 
+// TODO one obstacle view for all obstacles
 class ObstacleView
 {
 	unsigned int VBO, VAO, EBO;
@@ -16,6 +17,5 @@ public:
 
 	const std::shared_ptr<Shader> GetShader() { return shader; };
 
-	void UpdateVerticesView();
 	void Render();
 };

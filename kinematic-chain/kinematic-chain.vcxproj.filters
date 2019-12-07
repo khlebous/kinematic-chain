@@ -34,6 +34,12 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{92b49a18-ecb7-4d3d-b62a-42a7e29cf7a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene\Obstacle">
+      <UniqueIdentifier>{d6b443c8-5bf3-4a95-8526-40fc0cce3de5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Obstacle">
+      <UniqueIdentifier>{2ddc8b96-a110-4df2-aac7-142955df9783}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -75,11 +81,23 @@
     <ClCompile Include="Scene\ImGuiController.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\ShaderConstants.cpp">
-      <Filter>Header Files\Utils</Filter>
+    <ClCompile Include="Scene\Obstacle.cpp">
+      <Filter>Source Files\Scene\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ObstacleModel.cpp">
+      <Filter>Source Files\Scene\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ObstacleView.cpp">
+      <Filter>Source Files\Scene\Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="Utils\ColorConstants.cpp">
-      <Filter>Header Files\Utils</Filter>
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\ShaderConstants.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\WindowSizeUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,12 +149,30 @@
     <ClInclude Include="Utils\ColorConstants.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\ObstacleModel.h">
+      <Filter>Header Files\Scene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Obstacle.h">
+      <Filter>Header Files\Scene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ObstacleView.h">
+      <Filter>Header Files\Scene\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\WindowSizeUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\AxesShader.fs">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\AxesShader.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\ObstaclesShader.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\ObstaclesShader.vs">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

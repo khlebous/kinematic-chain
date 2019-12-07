@@ -1,4 +1,5 @@
 #include "ObstacleView.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 ObstacleView::ObstacleView(std::shared_ptr<ObstacleModel> _m, std::shared_ptr<Shader> _s)
 {
@@ -11,7 +12,18 @@ ObstacleView::ObstacleView(std::shared_ptr<ObstacleModel> _m, std::shared_ptr<Sh
 
 	glBindVertexArray(VAO);
 
-	UpdateVerticesView();
+	glm::vec2 position = model->GetPosition();
+	glm::vec2 size = model->GetSize();
+
+	float vertices[] = { // positions
+		1.0f,  1.0f,
+		1.0f,  0.0f,
+		0.0f,  0.0f,
+		0.0f,  1.0f,
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -25,26 +37,13 @@ ObstacleView::ObstacleView(std::shared_ptr<ObstacleModel> _m, std::shared_ptr<Sh
 	glEnableVertexAttribArray(0);
 }
 
-void ObstacleView::UpdateVerticesView()
-{
-	glm::vec2 position = model->GetPosition();
-	glm::vec2 size = model->GetSize();
-
-	float vertices[] = { // positions
-		position.x + size.x,  position.y + size.y,
-		position.x + size.x,  position.y,
-		position.x,           position.y,
-		position.x,           position.y + size.y,
-	};
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-}
-
 void ObstacleView::Render()
 {
+	// TODO model mtx for 2d?
 	shader->use();
-	shader->setVec3(ShaderConstants::COLOR, model->GetColor());
+	shader->setMat4(ShaderConstants::MODEL_MTX,
+		glm::scale(glm::translate(glm::mat4(1), glm::vec3(model->GetPosition(), 0.0f)), glm::vec3(model->GetSize(), 0.0f)));
+		shader->setVec3(ShaderConstants::COLOR, model->GetColor());
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

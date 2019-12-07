@@ -4,8 +4,10 @@
 SceneController::SceneController()
 {
 	mode = 0;
+	isCreatingObstacle = false;
 
 	shader = std::make_shared<Shader>("AxesShader.vs", "AxesShader.fs");
+	obstacles_shader = std::make_shared<Shader>("ObstaclesShader.vs", "ObstaclesShader.fs");
 
 	imGuiController = std::make_shared<ImGuiController>();
 	
@@ -16,6 +18,9 @@ SceneController::SceneController()
 void SceneController::Render(float deltaTime)
 {
 	axes->Render();
+
+	for (size_t i = 0; i < obstacles.size(); i++)
+		obstacles[i].Render();
 
 	switch (mode)
 	{
@@ -43,5 +48,21 @@ void SceneController::Render(float deltaTime)
 
 void SceneController::RenderImGui()
 {
-	imGuiController->Render();
+	imGuiController->Render(obstacles);
+}
+
+void SceneController::ProcessObstacle(float xpos, float ypos)
+{
+	if (!isCreatingObstacle)
+	{
+		StartCreatingObstacle(xpos, ypos);
+		return;
+	}
+
+	ContinueCreatingObstacle(xpos, ypos);
+}
+
+void SceneController::EndObstacleEditing()
+{
+	isCreatingObstacle = false;
 }

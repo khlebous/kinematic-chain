@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <memory>
 #include <iostream>
+#include <time.h> 
 
 #include "Utils/WindowConstants.h"
 #include "Scene/SceneController.h"
@@ -16,6 +17,7 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void process_input(GLFWwindow* window);
 
 // camera
@@ -23,6 +25,7 @@ float last_x = WindowConstants::WIDTH / 2.0f;
 float last_y = WindowConstants::HEIGHT / 2.0f;
 
 bool mouse_right_button_down = false;
+bool key_o_down = false;
 bool first_mouse = true;
 
 // timing
@@ -53,6 +56,7 @@ int main()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
+	glfwSetKeyCallback(window, key_callback);
 
 	// init ImGui
 	IMGUI_CHECKVERSION();
@@ -80,6 +84,8 @@ int main()
 	glLineWidth(1);
 
 	sceneController = std::make_shared<SceneController>();
+
+	srand(time(NULL));
 
 	// render loop
 	// -----------
@@ -171,6 +177,9 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
 	last_x = xpos;
 	last_y = ypos;
+
+	if (mouse_right_button_down && key_o_down)
+		sceneController->ProcessObstacle(xpos, ypos);
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -180,6 +189,20 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		if (action == GLFW_PRESS)
 			mouse_right_button_down = true;
 		else if (action == GLFW_RELEASE)
+		{
 			mouse_right_button_down = false;
+			sceneController->EndObstacleEditing();
+		}
+	}
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_O)
+	{
+		if (action == GLFW_PRESS)
+			key_o_down = true;
+		else if (action == GLFW_RELEASE)
+			key_o_down = false;
 	}
 }
