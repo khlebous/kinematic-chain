@@ -88,6 +88,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Scene\Arm.cpp" />
     <ClCompile Include="Scene\Axes.cpp" />
+    <ClCompile Include="Scene\Camera.cpp" />
     <ClCompile Include="Scene\ImGuiController.cpp" />
     <ClCompile Include="Scene\Obstacle.cpp" />
     <ClCompile Include="Scene\ObstacleModel.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="Scene\Arm.h" />
     <ClInclude Include="Scene\Axes.h" />
+    <ClInclude Include="Scene\Camera.h" />
     <ClInclude Include="Scene\ImGuiController.h" />
     <ClInclude Include="Scene\Obstacle.h" />
     <ClInclude Include="Scene\ObstacleModel.h" />

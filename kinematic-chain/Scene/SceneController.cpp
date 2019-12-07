@@ -1,7 +1,8 @@
 #include "SceneController.h"
 #include "..//Utils/ShaderConstants.h"
 
-SceneController::SceneController()
+SceneController::SceneController() : 
+	camera(std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 1.0f), -90.0f, 0.0f, glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)))
 {
 	mode = 0;
 	isCreatingObstacle = false;
@@ -15,7 +16,7 @@ SceneController::SceneController()
 	axes = std::make_shared<Axes>();
 	axes->SetShader(shader);
 
-	float arm1_length = 0.3f;
+	float arm1_length = 100.f;
 	float arm2_length = 0.3f;
 	Arm start_arm1 = Arm(arm1_length, 1.5f);
 	Arm start_arm2 = Arm(arm2_length, 0.0f);
@@ -27,13 +28,12 @@ SceneController::SceneController()
 	robot = std::make_shared<Robot>(robotModel, robot_shader);
 }
 
-void SceneController::Render(float deltaTime)
+void SceneController::Render()
 {
-	axes->Render();
-
 	for (size_t i = 0; i < obstacles.size(); i++)
 		obstacles[i].Render();
 
+	axes->Render();
 	robot->Render();
 
 	switch (mode)
@@ -55,9 +55,7 @@ void SceneController::Render(float deltaTime)
 		break;
 	}
 
-
 	glUseProgram(0);
-
 }
 
 void SceneController::RenderImGui()

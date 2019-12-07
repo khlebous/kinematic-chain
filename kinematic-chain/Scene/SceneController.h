@@ -5,6 +5,7 @@
 #include "Obstacle.h"
 #include "Robot.h"
 #include "..//Utils/WindowSizeUtils.h"
+#include "Camera.h"
 
 class SceneController
 {
@@ -14,6 +15,7 @@ class SceneController
 
 	std::shared_ptr<Axes> axes;
 	std::shared_ptr<ImGuiController> imGuiController;
+	std::shared_ptr<Camera> camera;
 
 	std::vector<Obstacle> obstacles;
 	std::shared_ptr<Robot> robot;
@@ -24,12 +26,35 @@ class SceneController
 public:
 	SceneController();
 
-	void Render(float deltaTime);
+	void Update(float deltaTime)
+	{
+		UpdateShaders();
+	}
+
+	void Render();
 	void RenderImGui();
 	void ProcessObstacle(float xpos, float ypos);
 	void EndObstacleEditing();
 
+
 private:
+	void UpdateShaders()
+	{
+		shader->use();
+		shader->setMat4(ShaderConstants::VIEW_MTX, camera->View);
+		shader->setMat4(ShaderConstants::PROJECTION_MTX, camera->Projection);
+
+		obstacles_shader->use();
+		obstacles_shader->setMat4(ShaderConstants::VIEW_MTX, camera->View);
+		obstacles_shader->setMat4(ShaderConstants::PROJECTION_MTX, camera->Projection);
+
+		robot_shader->use();
+		robot_shader->setMat4(ShaderConstants::VIEW_MTX, camera->View);
+		robot_shader->setMat4(ShaderConstants::PROJECTION_MTX, camera->Projection);
+
+		glUseProgram(0);
+	}
+
 	void StartCreatingObstacle(float xpos, float ypos)
 	{
 		isCreatingObstacle = true;

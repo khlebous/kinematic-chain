@@ -120,6 +120,9 @@
     <ClCompile Include="Scene\RobotView.cpp">
       <Filter>Source Files\Scene\Robot</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\Camera.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\imconfig.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="Scene\RobotView.h">
       <Filter>Header Files\Scene\Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Camera.h">
+      <Filter>Header Files\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

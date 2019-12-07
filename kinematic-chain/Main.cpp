@@ -78,9 +78,9 @@ int main()
 
 	// configure global opengl state
 	// -----------------------------
-	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.635f, 0.682f, 0.6f, 1.0f);
 	glEnable(GL_PROGRAM_POINT_SIZE);
+	glDisable(GL_DEPTH_TEST);
 
 	sceneController = std::make_shared<SceneController>();
 
@@ -104,7 +104,8 @@ int main()
 
 		// render
 		// ------
-		sceneController->Render(delta_time);
+		sceneController->Update(delta_time);
+		sceneController->Render();
 
 		
 		ImGui_ImplOpenGL2_NewFrame();

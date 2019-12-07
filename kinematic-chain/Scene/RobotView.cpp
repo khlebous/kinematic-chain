@@ -35,12 +35,12 @@ void RobotView::Render()
 
 	Arm& arm = model->GetStartRef().GetArm1Ref();
 
-	//shader->setMat4(ShaderConstants::MODEL_MTX, glm::mat4(1));
-	glm::mat4 m1 = glm::scale(glm::mat4(1), glm::vec3(arm.GetLength(), 0, 0));
-	glm::mat4 m2 = glm::rotate(glm::mat4(1), arm.GetAngle(), { 0, 0, 1 });
+	glm::mat4 s_matrix = glm::scale(glm::mat4(1), glm::vec3(arm.GetLength(), 0, 0));
+	glm::mat4 r_matrix = glm::rotate(glm::mat4(1), arm.GetAngle(), { 0, 0, 1 });
 
 	shader->setMat4(ShaderConstants::MODEL_MTX,
-		m2 * m1);
+		r_matrix * s_matrix
+	);
 	shader->setVec3(ShaderConstants::COLOR, { 0.5f, 0.2f, 0.3f });
 
 	glLineWidth(5);

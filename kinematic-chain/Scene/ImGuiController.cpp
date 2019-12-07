@@ -41,7 +41,7 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 	ImGui::Text("Robot");
 
 	Arm& arm = robot->GetModel()->GetStartRef().GetArm1Ref();
-	ImGui::SliderFloat("arm1 length", &arm.GetLengthRef(), 0, 1);
+	ImGui::DragFloat("arm1 length", &arm.GetLengthRef());
 	ImGui::SliderAngle("arm1 angle", &arm.GetAngleRef());
 
 	ImGui::Separator();
@@ -53,8 +53,8 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 		if (ImGui::TreeNode(("obstacle" + std::to_string(i)).c_str()))
 		{
 			ObstacleModel* model = obstacles[i].GetModel();
-			ImGui::SliderFloat2(("position" + std::to_string(i)).c_str(), &model->GetPositionRef()[0], -1.0f, 1.0f);
-			ImGui::SliderFloat2(("size" + std::to_string(i)).c_str(), &model->GetSizeRef()[0], -2.0f, 2.0f);
+			ImGui::DragFloat2(("position" + std::to_string(i)).c_str(), &model->GetPositionRef()[0]);
+			ImGui::DragFloat2(("size" + std::to_string(i)).c_str(), &model->GetSizeRef()[0]);
 			ImGui::ColorEdit3(("color" + std::to_string(i)).c_str(), &model->GetColorRef()[0]);
 			if (ImGui::Button(("delete obstacle" +std::to_string(i)).c_str()))
 				obstacle_idx_to_delete = i;

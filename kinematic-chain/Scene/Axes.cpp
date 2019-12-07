@@ -16,6 +16,7 @@ Axes::~Axes()
 void Axes::Render()
 {
 	shader->use();
+	shader->setMat4(ShaderConstants::MODEL_MTX, glm::mat4(1));
 	
 	glLineWidth(1);
 
