@@ -32,6 +32,8 @@ RobotView::RobotView(std::shared_ptr<RobotModel> _m, std::shared_ptr<Shader> _s)
 void RobotView::Render()
 {
 	shader->use();
+	glLineWidth(5);
+	glBindVertexArray(VAO);
 
 	Arm& arm = model->GetStartRef().GetArm1Ref();
 
@@ -42,11 +44,23 @@ void RobotView::Render()
 		r_matrix * s_matrix
 	);
 	shader->setVec3(ShaderConstants::COLOR, { 0.5f, 0.2f, 0.3f });
-
-	glLineWidth(5);
-
-	glBindVertexArray(VAO);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+
+
+	Arm& arm2 = model->GetStartRef().GetArm2Ref();
+
+	glm::mat4 t2_matrix = glm::translate(glm::mat4(1), glm::vec3(
+		glm::cos(arm.GetAngle()) * arm.GetLength(), 
+		glm::sin(arm.GetAngle()) * arm.GetLength(),
+		0));
+	glm::mat4 s2_matrix = glm::scale(glm::mat4(1), glm::vec3(arm2.GetLength(), 0, 0));
+	glm::mat4 r2_matrix = glm::rotate(glm::mat4(1), arm.GetAngle() + arm2.GetAngle(), { 0, 0, 1 });
+	shader->setMat4(ShaderConstants::MODEL_MTX,
+		t2_matrix * r2_matrix * s2_matrix
+	);
+	shader->setVec3(ShaderConstants::COLOR, { 0.5f, 0.6f, 0.3f }); 
+	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+
 
 	glBindVertexArray(0);
 	glUseProgram(0);

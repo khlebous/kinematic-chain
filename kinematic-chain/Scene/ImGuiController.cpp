@@ -40,9 +40,15 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 {
 	ImGui::Text("Robot");
 
-	Arm& arm = robot->GetModel()->GetStartRef().GetArm1Ref();
-	ImGui::DragFloat("arm1 length", &arm.GetLengthRef());
-	ImGui::SliderAngle("arm1 angle", &arm.GetAngleRef());
+	Arm& arm1 = robot->GetModel()->GetStartRef().GetArm1Ref();
+	ImGui::DragFloat("arm1 length", &arm1.GetLengthRef());
+	ImGui::SliderAngle("arm1 angle", &arm1.GetAngleRef());
+
+	ImGui::Spacing();
+
+	Arm& arm2 = robot->GetModel()->GetStartRef().GetArm2Ref();
+	ImGui::DragFloat("arm2 length", &arm2.GetLengthRef());
+	ImGui::SliderAngle("arm2 angle", &arm2.GetAngleRef());
 
 	ImGui::Separator();
 

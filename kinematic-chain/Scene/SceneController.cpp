@@ -17,7 +17,7 @@ SceneController::SceneController() :
 	axes->SetShader(shader);
 
 	float arm1_length = 100.f;
-	float arm2_length = 0.3f;
+	float arm2_length = 80.f;
 	Arm start_arm1 = Arm(arm1_length, 1.5f);
 	Arm start_arm2 = Arm(arm2_length, 0.0f);
 	Arm end_arm1 = Arm(arm2_length, 0.0f);
