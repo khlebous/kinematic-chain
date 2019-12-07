@@ -16,6 +16,8 @@ Axes::~Axes()
 void Axes::Render()
 {
 	shader->use();
+	
+	glLineWidth(1);
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_LINES, indices_size, GL_UNSIGNED_INT, 0);

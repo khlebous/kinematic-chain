@@ -1,7 +1,7 @@
 #include "ImGuiController.h"
 #include "..//Utils/WindowConstants.h"
 
-void ImGuiController::Render(std::vector<Obstacle>& obstacles)
+void ImGuiController::Render(std::vector<Obstacle>& obstacles, Robot* robot)
 {
 	RenderMainMenuBar();
 
@@ -11,7 +11,7 @@ void ImGuiController::Render(std::vector<Obstacle>& obstacles)
 	{
 		if (ImGui::BeginTabItem("Edit"))
 		{
-			RenderEditMode(obstacles);
+			RenderEditMode(obstacles, robot);
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("PathFinding"))
@@ -36,8 +36,16 @@ void ImGuiController::RenderMainMenuBar()
 	}
 }
 
-void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles)
+void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* robot)
 {
+	ImGui::Text("Robot");
+
+	Arm& arm = robot->GetModel()->GetStartRef().GetArm1Ref();
+	ImGui::SliderFloat("arm1 length", &arm.GetLengthRef(), 0, 1);
+	ImGui::SliderAngle("arm1 angle", &arm.GetAngleRef());
+
+	ImGui::Separator();
+
 	ImGui::Text("Obstacles");
 	size_t obstacle_idx_to_delete = -1;
 	for (size_t i = 0; i < obstacles.size(); i++)

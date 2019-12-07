@@ -4,6 +4,7 @@
 #include <vector>
 #include "..//ImGui/imgui.h"
 #include "Obstacle.h"
+#include "Robot.h"
 
 class ImGuiController
 {
@@ -13,10 +14,10 @@ public:
 	ImGuiController() { }
 	~ImGuiController() { }
 
-	void Render(std::vector<Obstacle>& obstacles);
+	void Render(std::vector<Obstacle>& obstacles, Robot* robot);
 
 private:
 	void RenderMainMenuBar();
-	void RenderEditMode(std::vector<Obstacle>& obstacles);
+	void RenderEditMode(std::vector<Obstacle>& obstacles, Robot* robot);
 	void RenderPathFindingMode();
 };

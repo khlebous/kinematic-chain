@@ -3,17 +3,20 @@
 #include "ImGuiController.h"
 #include "Axes.h"
 #include "Obstacle.h"
+#include "Robot.h"
 #include "..//Utils/WindowSizeUtils.h"
 
 class SceneController
 {
 	std::shared_ptr<Shader> shader;
 	std::shared_ptr<Shader> obstacles_shader;
+	std::shared_ptr<Shader> robot_shader;
 
 	std::shared_ptr<Axes> axes;
 	std::shared_ptr<ImGuiController> imGuiController;
 
 	std::vector<Obstacle> obstacles;
+	std::shared_ptr<Robot> robot;
 
 	int mode;
 	bool isCreatingObstacle;

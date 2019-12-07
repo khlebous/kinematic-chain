@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Scene\Obstacle">
       <UniqueIdentifier>{2ddc8b96-a110-4df2-aac7-142955df9783}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene\Robot">
+      <UniqueIdentifier>{e9712775-2fab-4a4f-a355-95dd5bb60878}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Robot">
+      <UniqueIdentifier>{578776a6-ecdc-4672-8190-096765d2bd29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -98,6 +104,21 @@
     </ClCompile>
     <ClCompile Include="Utils\WindowSizeUtils.cpp">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Robot.cpp">
+      <Filter>Source Files\Scene\Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Arm.cpp">
+      <Filter>Source Files\Scene\Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\RobotConfiguration.cpp">
+      <Filter>Source Files\Scene\Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\RobotModel.cpp">
+      <Filter>Source Files\Scene\Robot</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\RobotView.cpp">
+      <Filter>Source Files\Scene\Robot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +182,21 @@
     <ClInclude Include="Utils\WindowSizeUtils.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\Arm.h">
+      <Filter>Header Files\Scene\Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Robot.h">
+      <Filter>Header Files\Scene\Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\RobotConfiguration.h">
+      <Filter>Header Files\Scene\Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\RobotModel.h">
+      <Filter>Header Files\Scene\Robot</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\RobotView.h">
+      <Filter>Header Files\Scene\Robot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\AxesShader.fs">
@@ -173,6 +209,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\ObstaclesShader.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\RobotShader.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\RobotShader.vs">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

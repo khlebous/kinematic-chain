@@ -81,7 +81,6 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.635f, 0.682f, 0.6f, 1.0f);
 	glEnable(GL_PROGRAM_POINT_SIZE);
-	glLineWidth(1);
 
 	sceneController = std::make_shared<SceneController>();
 
