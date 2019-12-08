@@ -54,11 +54,25 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 	ImGui::Spacing();
 	ImGui::Text("Start configuration");
 
-	ImGui::SliderAngle("arm1 angle", &arm1.GetAngleRef());
-	ImGui::ColorEdit3("arm1 color", &arm1.GetColorRef()[0]);
-	ImGui::Spacing();
-	ImGui::SliderAngle("arm2 angle", &arm2.GetAngleRef());
-	ImGui::ColorEdit3("arm2 color", &arm2.GetColorRef()[0]);
+	if (robot->GetModel()->GetStartRef().GetIsAlthernativeRef())
+	{
+		ImGui::SliderAngle("arm1 angle", &arm1.GetAlthernativeAngleRef());
+		ImGui::ColorEdit3("arm1 color", &arm1.GetColorRef()[0]);
+		ImGui::Spacing();
+		ImGui::SliderAngle("arm2 angle", &arm2.GetAlthernativeAngleRef());
+		ImGui::ColorEdit3("arm2 color", &arm2.GetColorRef()[0]);
+	}
+	else
+	{
+		ImGui::SliderAngle("arm1 angle", &arm1.GetAngleRef());
+		ImGui::ColorEdit3("arm1 color", &arm1.GetColorRef()[0]);
+		ImGui::Spacing();
+		ImGui::SliderAngle("arm2 angle", &arm2.GetAngleRef());
+		ImGui::ColorEdit3("arm2 color", &arm2.GetColorRef()[0]);
+	}
+
+
+	ImGui::Checkbox("althernative1", &robot->GetModel()->GetStartRef().GetIsAlthernativeRef());
 
 	ImGui::Spacing();
 	ImGui::Text("End configuration");

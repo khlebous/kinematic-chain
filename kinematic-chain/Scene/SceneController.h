@@ -31,7 +31,8 @@ public:
 	void Render();
 	void RenderImGui();
 	void ProcessObstacle(float xpos, float ypos);
-	void EndObstacleEditing();
+	void ProcessFirstConfiguration(float xpos, float ypos);
+	void OnRightMouseUp();
 	void ProcessWindowResize();
 
 private:

@@ -26,6 +26,7 @@ float last_y = WindowConstants::HEIGHT / 2.0f;
 
 bool mouse_right_button_down = false;
 bool key_o_down = false;
+bool key_f_down = false;
 bool first_mouse = true;
 
 // timing
@@ -50,7 +51,7 @@ int main()
 		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(window); 
+	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); // Enable vsync
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -109,7 +110,7 @@ int main()
 		sceneController->Update(delta_time);
 		sceneController->Render();
 
-		
+
 		ImGui_ImplOpenGL2_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -124,7 +125,7 @@ int main()
 
 		// ImGui Rendering
 		sceneController->RenderImGui();
-		
+
 		ImGui::Render();
 		ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
@@ -182,8 +183,13 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	last_x = xpos;
 	last_y = ypos;
 
-	if (mouse_right_button_down && key_o_down)
-		sceneController->ProcessObstacle(xpos, ypos);
+	if (mouse_right_button_down)
+	{
+		if (key_o_down)
+			sceneController->ProcessObstacle(xpos, ypos);
+		else if (key_f_down)
+			sceneController->ProcessFirstConfiguration(xpos, ypos);
+	}
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -195,7 +201,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		else if (action == GLFW_RELEASE)
 		{
 			mouse_right_button_down = false;
-			sceneController->EndObstacleEditing();
+			sceneController->OnRightMouseUp();
 		}
 	}
 }
@@ -204,9 +210,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
 	if (key == GLFW_KEY_O)
 	{
-		if (action == GLFW_PRESS)
-			key_o_down = true;
-		else if (action == GLFW_RELEASE)
-			key_o_down = false;
+		if (action == GLFW_PRESS) key_o_down = true;
+		else if (action == GLFW_RELEASE) key_o_down = false;
+	}
+
+	if (key == GLFW_KEY_F)
+	{
+		if (action == GLFW_PRESS) key_f_down = true;
+		else if (action == GLFW_RELEASE) key_f_down = false;
 	}
 }
