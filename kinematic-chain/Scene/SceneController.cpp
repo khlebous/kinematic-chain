@@ -19,10 +19,10 @@ SceneController::SceneController() :
 
 	float arm1_length = 100.f;
 	float arm2_length = 80.f;
-	Arm start_arm1 = Arm(arm1_length, 1.5f);
-	Arm start_arm2 = Arm(arm2_length, 0.0f);
-	Arm end_arm1 = Arm(arm2_length, 0.0f);
-	Arm end_arm2 = Arm(arm2_length, 0.0f);
+	Arm start_arm1 = Arm(arm1_length, 1.5f, glm::vec3(0));
+	Arm start_arm2 = Arm(arm2_length, 0.2f, glm::vec3(0.2));
+	Arm end_arm1 = Arm(arm2_length, 0.0f, glm::vec3(0.4));
+	Arm end_arm2 = Arm(arm2_length, 0.4f, glm::vec3(0.6));
 	RobotConfiguration start = RobotConfiguration(start_arm1, start_arm2);
 	RobotConfiguration end = RobotConfiguration(end_arm1, end_arm2);
 	std::shared_ptr<RobotModel> robotModel = std::make_shared<RobotModel>(start, end);

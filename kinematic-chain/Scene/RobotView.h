@@ -14,4 +14,7 @@ public:
 	const std::shared_ptr<Shader> GetShader() { return shader; };
 
 	void Render();
+
+private:
+	void RenderConfiguration(RobotConfiguration& configuration);
 };

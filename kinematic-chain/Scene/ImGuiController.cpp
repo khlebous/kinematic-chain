@@ -39,16 +39,35 @@ void ImGuiController::RenderMainMenuBar()
 void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* robot)
 {
 	ImGui::Text("Robot");
-
-	Arm& arm1 = robot->GetModel()->GetStartRef().GetArm1Ref();
-	ImGui::DragFloat("arm1 length", &arm1.GetLengthRef());
-	ImGui::SliderAngle("arm1 angle", &arm1.GetAngleRef());
-
 	ImGui::Spacing();
 
+	Arm& arm1 = robot->GetModel()->GetStartRef().GetArm1Ref();
 	Arm& arm2 = robot->GetModel()->GetStartRef().GetArm2Ref();
-	ImGui::DragFloat("arm2 length", &arm2.GetLengthRef());
+	Arm& arm3 = robot->GetModel()->GetEndRef().GetArm1Ref();
+	Arm& arm4 = robot->GetModel()->GetEndRef().GetArm2Ref();
+
+	if (ImGui::DragFloat("arm1 length", &arm1.GetLengthRef()))
+		arm3.SetLength(arm1.GetLength());
+	if (ImGui::DragFloat("arm2 length", &arm2.GetLengthRef()))
+		arm4.SetLength(arm2.GetLength());
+
+	ImGui::Spacing();
+	ImGui::Text("Start configuration");
+
+	ImGui::SliderAngle("arm1 angle", &arm1.GetAngleRef());
+	ImGui::ColorEdit3("arm1 color", &arm1.GetColorRef()[0]);
+	ImGui::Spacing();
 	ImGui::SliderAngle("arm2 angle", &arm2.GetAngleRef());
+	ImGui::ColorEdit3("arm2 color", &arm2.GetColorRef()[0]);
+
+	ImGui::Spacing();
+	ImGui::Text("End configuration");
+
+	ImGui::SliderAngle("arm3 angle", &arm3.GetAngleRef());
+	ImGui::ColorEdit3("arm3 color", &arm3.GetColorRef()[0]);
+	ImGui::Spacing();
+	ImGui::SliderAngle("arm4 angle", &arm4.GetAngleRef());
+	ImGui::ColorEdit3("arm4 color", &arm4.GetColorRef()[0]);
 
 	ImGui::Separator();
 
@@ -69,7 +88,7 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 			ImGui::DragFloat2(("position" + std::to_string(i)).c_str(), &model->GetPositionRef()[0]);
 			ImGui::DragFloat2(("size" + std::to_string(i)).c_str(), &model->GetSizeRef()[0]);
 			ImGui::ColorEdit3(("color" + std::to_string(i)).c_str(), &model->GetColorRef()[0]);
-			if (ImGui::Button(("delete obstacle" +std::to_string(i)).c_str()))
+			if (ImGui::Button(("delete obstacle" + std::to_string(i)).c_str()))
 				obstacle_idx_to_delete = i;
 			ImGui::TreePop();
 		}

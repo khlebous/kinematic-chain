@@ -35,33 +35,38 @@ void RobotView::Render()
 	glLineWidth(5);
 	glBindVertexArray(VAO);
 
-	Arm& arm = model->GetStartRef().GetArm1Ref();
+	RenderConfiguration(model->GetStartRef());
+	RenderConfiguration(model->GetEndRef());
 
-	glm::mat4 s_matrix = glm::scale(glm::mat4(1), glm::vec3(arm.GetLength(), 0, 0));
-	glm::mat4 r_matrix = glm::rotate(glm::mat4(1), arm.GetAngle(), { 0, 0, 1 });
+	glBindVertexArray(0);
+	glUseProgram(0);
+}
+
+
+void RobotView::RenderConfiguration(RobotConfiguration& configuration)
+{
+	Arm& arm1 = configuration.GetArm1Ref();
+
+	glm::mat4 s_matrix = glm::scale(glm::mat4(1), glm::vec3(arm1.GetLength(), 0, 0));
+	glm::mat4 r_matrix = glm::rotate(glm::mat4(1), arm1.GetAngle(), { 0, 0, 1 });
 
 	shader->setMat4(ShaderConstants::MODEL_MTX,
 		r_matrix * s_matrix
 	);
-	shader->setVec3(ShaderConstants::COLOR, { 0.5f, 0.2f, 0.3f });
+	shader->setVec3(ShaderConstants::COLOR, arm1.GetColor());
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 
-
-	Arm& arm2 = model->GetStartRef().GetArm2Ref();
+	Arm& arm2 = configuration.GetArm2Ref();
 
 	glm::mat4 t2_matrix = glm::translate(glm::mat4(1), glm::vec3(
-		glm::cos(arm.GetAngle()) * arm.GetLength(), 
-		glm::sin(arm.GetAngle()) * arm.GetLength(),
+		glm::cos(arm1.GetAngle()) * arm1.GetLength(),
+		glm::sin(arm1.GetAngle()) * arm1.GetLength(),
 		0));
 	glm::mat4 s2_matrix = glm::scale(glm::mat4(1), glm::vec3(arm2.GetLength(), 0, 0));
-	glm::mat4 r2_matrix = glm::rotate(glm::mat4(1), arm.GetAngle() + arm2.GetAngle(), { 0, 0, 1 });
+	glm::mat4 r2_matrix = glm::rotate(glm::mat4(1), arm1.GetAngle() + arm2.GetAngle(), { 0, 0, 1 });
 	shader->setMat4(ShaderConstants::MODEL_MTX,
 		t2_matrix * r2_matrix * s2_matrix
 	);
-	shader->setVec3(ShaderConstants::COLOR, { 0.5f, 0.6f, 0.3f }); 
+	shader->setVec3(ShaderConstants::COLOR, arm2.GetColor());
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
-
-
-	glBindVertexArray(0);
-	glUseProgram(0);
 }
