@@ -8,14 +8,16 @@
 #include <stdio.h>
 #include <memory>
 #include <iostream>
+#include <time.h> 
 
 #include "Utils/WindowConstants.h"
+#include "Scene/SceneController.h"
 
 //
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void process_input(GLFWwindow* window);
 
 // camera
@@ -23,14 +25,15 @@ float last_x = WindowConstants::WIDTH / 2.0f;
 float last_y = WindowConstants::HEIGHT / 2.0f;
 
 bool mouse_right_button_down = false;
+bool key_o_down = false;
 bool first_mouse = true;
 
 // timing
 float delta_time = 0.0f;
 float last_frame = 0.0f;
 
-//std::shared_ptr<SceneController> sceneController;
-bool show_demo_window = true;
+std::shared_ptr<SceneController> sceneController;
+bool show_demo_window = false;
 
 int main()
 {
@@ -52,8 +55,8 @@ int main()
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetScrollCallback(window, scroll_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
+	glfwSetKeyCallback(window, key_callback);
 
 	// init ImGui
 	IMGUI_CHECKVERSION();
@@ -75,12 +78,15 @@ int main()
 
 	// configure global opengl state
 	// -----------------------------
-	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.635f, 0.682f, 0.6f, 1.0f);
 	glEnable(GL_PROGRAM_POINT_SIZE);
-	glLineWidth(1);
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND); //Enable blending.
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Set blending function.
 
-	//sceneController = std::make_shared<SceneController>();
+	sceneController = std::make_shared<SceneController>();
+
+	srand(time(NULL));
 
 	// render loop
 	// -----------
@@ -100,7 +106,8 @@ int main()
 
 		// render
 		// ------
-		//sceneController->Render(delta_time);
+		sceneController->Update(delta_time);
+		sceneController->Render();
 
 		
 		ImGui_ImplOpenGL2_NewFrame();
@@ -116,7 +123,7 @@ int main()
 			ImGui::ShowDemoWindow();
 
 		// ImGui Rendering
-		//sceneController->RenderImGui();
+		sceneController->RenderImGui();
 		
 		ImGui::Render();
 		ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
@@ -142,19 +149,6 @@ void process_input(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-
-	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		sceneController->GetCamera()->ProcessKeyboard(FORWARD, delta_time);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		sceneController->GetCamera()->ProcessKeyboard(BACKWARD, delta_time);
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		sceneController->GetCamera()->ProcessKeyboard(LEFT, delta_time);
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		sceneController->GetCamera()->ProcessKeyboard(RIGHT, delta_time);
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		sceneController->GetCamera()->ProcessKeyboard(DOWN, delta_time);
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-		sceneController->GetCamera()->ProcessKeyboard(UP, delta_time);*/
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -167,6 +161,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 	WindowConstants::WIDTH = width;
 	WindowConstants::HEIGHT = height;
+
+	sceneController->ProcessWindowResize();
 }
 
 // glfw: whenever the mouse moves, this callback is called
@@ -186,10 +182,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	last_x = xpos;
 	last_y = ypos;
 
-	if (!mouse_right_button_down)
-		return;
-
-	//sceneController->GetCamera()->ProcessMouseMovement(xoffset, yoffset);
+	if (mouse_right_button_down && key_o_down)
+		sceneController->ProcessObstacle(xpos, ypos);
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -199,13 +193,20 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		if (action == GLFW_PRESS)
 			mouse_right_button_down = true;
 		else if (action == GLFW_RELEASE)
+		{
 			mouse_right_button_down = false;
+			sceneController->EndObstacleEditing();
+		}
 	}
 }
 
-// glfw: whenever the mouse scroll wheel scrolls, this callback is called
-// ----------------------------------------------------------------------
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	//sceneController->GetCamera()->ProcessMouseScroll(yoffset);
+	if (key == GLFW_KEY_O)
+	{
+		if (action == GLFW_PRESS)
+			key_o_down = true;
+		else if (action == GLFW_RELEASE)
+			key_o_down = false;
+	}
 }
