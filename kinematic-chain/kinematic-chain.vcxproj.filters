@@ -46,6 +46,12 @@
     <Filter Include="Source Files\Scene\Robot">
       <UniqueIdentifier>{578776a6-ecdc-4672-8190-096765d2bd29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene\Robot\ConfigurationSpace">
+      <UniqueIdentifier>{28ae5512-bf28-482c-a833-c0ceef37c3ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Robot\ConfigurationSpace">
+      <UniqueIdentifier>{b438c8af-622c-4b06-98b2-4cc4f574feab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -122,6 +128,15 @@
     </ClCompile>
     <ClCompile Include="Scene\Camera.cpp">
       <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ConfigurationSpace.cpp">
+      <Filter>Source Files\Scene\Robot\ConfigurationSpace</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ConfigurationSpaceView.cpp">
+      <Filter>Source Files\Scene\Robot\ConfigurationSpace</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ConfigurationSpaceModel.cpp">
+      <Filter>Source Files\Scene\Robot\ConfigurationSpace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +218,15 @@
     <ClInclude Include="Scene\Camera.h">
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\ConfigurationSpaceModel.h">
+      <Filter>Header Files\Scene\Robot\ConfigurationSpace</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ConfigurationSpace.h">
+      <Filter>Header Files\Scene\Robot\ConfigurationSpace</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ConfigurationSpaceView.h">
+      <Filter>Header Files\Scene\Robot\ConfigurationSpace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\AxesShader.fs">
@@ -221,6 +245,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\RobotShader.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\TextureShader.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\TextureShader.vs">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

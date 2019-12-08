@@ -89,6 +89,9 @@
     <ClCompile Include="Scene\Arm.cpp" />
     <ClCompile Include="Scene\Axes.cpp" />
     <ClCompile Include="Scene\Camera.cpp" />
+    <ClCompile Include="Scene\ConfigurationSpace.cpp" />
+    <ClCompile Include="Scene\ConfigurationSpaceModel.cpp" />
+    <ClCompile Include="Scene\ConfigurationSpaceView.cpp" />
     <ClCompile Include="Scene\ImGuiController.cpp" />
     <ClCompile Include="Scene\Obstacle.cpp" />
     <ClCompile Include="Scene\ObstacleModel.cpp" />
@@ -116,6 +119,9 @@
     <ClInclude Include="Scene\Arm.h" />
     <ClInclude Include="Scene\Axes.h" />
     <ClInclude Include="Scene\Camera.h" />
+    <ClInclude Include="Scene\ConfigurationSpace.h" />
+    <ClInclude Include="Scene\ConfigurationSpaceModel.h" />
+    <ClInclude Include="Scene\ConfigurationSpaceView.h" />
     <ClInclude Include="Scene\ImGuiController.h" />
     <ClInclude Include="Scene\Obstacle.h" />
     <ClInclude Include="Scene\ObstacleModel.h" />
@@ -138,6 +144,8 @@
     <None Include="Resources\Shaders\ObstaclesShader.vs" />
     <None Include="Resources\Shaders\RobotShader.fs" />
     <None Include="Resources\Shaders\RobotShader.vs" />
+    <None Include="Resources\Shaders\TextureShader.fs" />
+    <None Include="Resources\Shaders\TextureShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

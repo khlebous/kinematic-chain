@@ -7,3 +7,9 @@ Robot& Robot::operator=(const Robot& o)
 
 	return *this;
 }
+
+void Robot::Render()
+{
+	view->Render();
+	configuration_space->Render();
+}

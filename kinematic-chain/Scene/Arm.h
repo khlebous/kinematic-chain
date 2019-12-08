@@ -14,8 +14,8 @@ public:
 	float& GetLengthRef() { return length; }
 	float& GetAngleRef() { return angle; }
 
-	float GetLength() { return length; }
-	float GetAngle() { return angle; }
+	float GetLength() const { return length; }
+	float GetAngle() const { return angle; }
 
 	void SetLength(float _l) { length = _l; }
 	void SetAngle(float _a) { angle = _a; }

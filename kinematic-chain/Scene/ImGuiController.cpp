@@ -52,6 +52,13 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 
 	ImGui::Separator();
 
+	if (ImGui::Button("Update scene"))
+	{
+		robot->UpdateParametrization(obstacles);
+	}
+
+	ImGui::Separator();
+
 	ImGui::Text("Obstacles");
 	size_t obstacle_idx_to_delete = -1;
 	for (size_t i = 0; i < obstacles.size(); i++)

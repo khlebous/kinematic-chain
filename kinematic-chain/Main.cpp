@@ -81,6 +81,8 @@ int main()
 	glClearColor(0.635f, 0.682f, 0.6f, 1.0f);
 	glEnable(GL_PROGRAM_POINT_SIZE);
 	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND); //Enable blending.
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Set blending function.
 
 	sceneController = std::make_shared<SceneController>();
 
@@ -159,6 +161,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 	WindowConstants::WIDTH = width;
 	WindowConstants::HEIGHT = height;
+
+	sceneController->ProcessWindowResize();
 }
 
 // glfw: whenever the mouse moves, this callback is called
