@@ -42,17 +42,11 @@ void RobotView::Render()
 	glUseProgram(0);
 }
 
-
 void RobotView::RenderConfiguration(RobotConfiguration& configuration)
 {
 	Arm& arm1 = configuration.GetArm1Ref();
-
-	float arm1_angle;
-	if (configuration.GetIsAlthernativeRef())
-		arm1_angle = arm1.GetAlthernativeAngle();
-	else
-		arm1_angle = arm1.GetAngle();
-
+	float arm1_angle = configuration.GetArm1Angle();
+	
 	glm::mat4 s_matrix = glm::scale(glm::mat4(1), glm::vec3(arm1.GetLength(), 0, 0));
 	glm::mat4 r_matrix = glm::rotate(glm::mat4(1), arm1_angle, { 0, 0, 1 });
 
@@ -63,12 +57,8 @@ void RobotView::RenderConfiguration(RobotConfiguration& configuration)
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 
 	Arm& arm2 = configuration.GetArm2Ref();
-	float arm2_angle;
-	if (configuration.GetIsAlthernativeRef())
-		arm2_angle = arm2.GetAlthernativeAngle();
-	else
-		arm2_angle = arm2.GetAngle();
-
+	float arm2_angle = configuration.GetArm2Angle();
+	
 	glm::mat4 t2_matrix = glm::translate(glm::mat4(1), glm::vec3(
 		glm::cos(arm1_angle) * arm1.GetLength(),
 		glm::sin(arm1_angle) * arm1.GetLength(),

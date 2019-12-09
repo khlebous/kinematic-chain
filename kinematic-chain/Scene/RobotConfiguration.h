@@ -19,4 +19,10 @@ public:
 
 	void SetArm1(const Arm& _a) { arm1 = _a; }
 	void SetArm2(const Arm& _a) { arm2 = _a; }
+
+	float& GetArm1AngleRef() { return isAlthernative ? arm1.GetAlthernativeAngleRef() : arm1.GetAngleRef(); }
+	float& GetArm2AngleRef() { return isAlthernative ? arm2.GetAlthernativeAngleRef() : arm2.GetAngleRef(); }
+
+	float GetArm1Angle() const { return isAlthernative ? arm1.GetAlthernativeAngle() : arm1.GetAngle(); }
+	float GetArm2Angle() const { return isAlthernative ? arm2.GetAlthernativeAngle() : arm2.GetAngle(); }
 };

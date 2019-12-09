@@ -1,5 +1,7 @@
 #include "ImGuiController.h"
 #include "..//Utils/WindowConstants.h"
+#include "..//ImGui/imgui_internal.h"
+
 
 void ImGuiController::Render(std::vector<Obstacle>& obstacles, Robot* robot)
 {
@@ -54,23 +56,17 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 	ImGui::Spacing();
 	ImGui::Text("Start configuration");
 
-	if (robot->GetModel()->GetStartRef().GetIsAlthernativeRef())
-	{
-		ImGui::SliderAngle("arm1 angle", &arm1.GetAlthernativeAngleRef());
-		ImGui::ColorEdit3("arm1 color", &arm1.GetColorRef()[0]);
-		ImGui::Spacing();
-		ImGui::SliderAngle("arm2 angle", &arm2.GetAlthernativeAngleRef());
-		ImGui::ColorEdit3("arm2 color", &arm2.GetColorRef()[0]);
-	}
-	else
-	{
-		ImGui::SliderAngle("arm1 angle", &arm1.GetAngleRef());
-		ImGui::ColorEdit3("arm1 color", &arm1.GetColorRef()[0]);
-		ImGui::Spacing();
-		ImGui::SliderAngle("arm2 angle", &arm2.GetAngleRef());
-		ImGui::ColorEdit3("arm2 color", &arm2.GetColorRef()[0]);
-	}
+	PushDisabled();
+	ImGui::SliderAngle("arm1 angle", &robot->GetModel()->GetStartRef().GetArm1AngleRef());
+	PopDisabled();
+	ImGui::ColorEdit3("arm1 color", &arm1.GetColorRef()[0]);
 
+	ImGui::Spacing();
+
+	PushDisabled();
+	ImGui::SliderAngle("arm2 angle", &robot->GetModel()->GetStartRef().GetArm2AngleRef());
+	PopDisabled();
+	ImGui::ColorEdit3("arm2 color", &arm2.GetColorRef()[0]);
 
 	ImGui::Checkbox("althernative1", &robot->GetModel()->GetStartRef().GetIsAlthernativeRef());
 
@@ -117,4 +113,16 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 void ImGuiController::RenderPathFindingMode()
 {
 	ImGui::Text("Path finding mode");
+}
+
+void ImGuiController::PushDisabled()
+{
+	ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+}
+
+void ImGuiController::PopDisabled()
+{
+	ImGui::PopItemFlag();
+	ImGui::PopStyleVar();
 }
