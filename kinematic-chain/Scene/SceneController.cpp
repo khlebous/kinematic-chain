@@ -21,7 +21,7 @@ SceneController::SceneController() :
 	float arm2_length = 80.f;
 	Arm start_arm1 = Arm(arm1_length, 0, 0, glm::vec3(0));
 	Arm start_arm2 = Arm(arm2_length, 0, 0, glm::vec3(0.2));
-	Arm end_arm1 = Arm(arm2_length, 0, 0, glm::vec3(0.4));
+	Arm end_arm1 = Arm(arm1_length, 0, 0, glm::vec3(0.4));
 	Arm end_arm2 = Arm(arm2_length, 0, 0, glm::vec3(0.6));
 	RobotConfiguration start = RobotConfiguration(start_arm1, start_arm2);
 	RobotConfiguration end = RobotConfiguration(end_arm1, end_arm2);
@@ -71,6 +71,11 @@ void SceneController::ProcessObstacle(float xpos, float ypos)
 void SceneController::ProcessFirstConfiguration(float xpos, float ypos)
 {
 	robot->ProcessFirstConfiguration(xpos, ypos);
+}
+
+void SceneController::ProcessSecondConfiguration(float xpos, float ypos)
+{
+	robot->ProcessSecondConfiguration(xpos, ypos);
 }
 
 void SceneController::OnRightMouseUp()

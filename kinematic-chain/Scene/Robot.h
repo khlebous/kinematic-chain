@@ -31,39 +31,10 @@ public:
 	void Render();
 	void UpdateParametrization(const std::vector<Obstacle>& obstacles) { configuration_space->UpdateParametrization(obstacles); }
 	void ProcessWindowResize() { configuration_space->OnWindowSizeChanged(); }
-	void ProcessFirstConfiguration(float xpos, float ypos)
-	{
-		glm::vec2 pos = WindowSizeUtils::ParsePos(xpos, ypos);
-		glm::vec4 param = GetNewParametrizations(pos.x, pos.y);
-
-		model->GetStartRef().GetArm1Ref().SetAngle(param.x);
-		model->GetStartRef().GetArm2Ref().SetAngle(param.y);
-
-		model->GetStartRef().GetArm1Ref().SetAlthernativeAngle(param.z);
-		model->GetStartRef().GetArm2Ref().SetAlthernativeAngle(param.w);
-	}
+	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
+	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }
 
 private:
-	glm::vec4 GetNewParametrizations(float x, float y)
-	{
-		float l1 = model->GetStartRef().GetArm1Ref().GetLength();
-		float l2 = model->GetStartRef().GetArm2Ref().GetLength();
-		float l_square = x * x + y * y;
-
-		float theta2 = 2.f * glm::pi<float>() - glm::acos((l_square - l1 * l1 - l2 * l2) / (2.f * l1 * l2));
-
-		float beta = glm::atan(y, x);
-		float phi = glm::acos((l_square + l1 * l1 - l2 * l2) / (2.f * l1 * glm::sqrt(l_square)));
-		float theta1 = beta - phi;
-
-		glm::vec4 out;
-
-		out.x = beta + phi;
-		out.y = theta2;
-		
-		out.z = beta - phi;
-		out.w = -theta2;
-
-		return out;
-	}
+	glm::vec4 GetNewParametrizations(float x, float y);
+	void ProcessConfiguration(RobotConfiguration& configuration, float xpos, float ypos);
 };

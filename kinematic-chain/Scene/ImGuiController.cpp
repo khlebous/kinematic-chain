@@ -2,7 +2,6 @@
 #include "..//Utils/WindowConstants.h"
 #include "..//ImGui/imgui_internal.h"
 
-
 void ImGuiController::Render(std::vector<Obstacle>& obstacles, Robot* robot)
 {
 	RenderMainMenuBar();
@@ -43,10 +42,12 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 	ImGui::Text("Robot");
 	ImGui::Spacing();
 
-	Arm& arm1 = robot->GetModel()->GetStartRef().GetArm1Ref();
-	Arm& arm2 = robot->GetModel()->GetStartRef().GetArm2Ref();
-	Arm& arm3 = robot->GetModel()->GetEndRef().GetArm1Ref();
-	Arm& arm4 = robot->GetModel()->GetEndRef().GetArm2Ref();
+	RobotConfiguration& start = robot->GetModel()->GetStartRef();
+	RobotConfiguration& end = robot->GetModel()->GetEndRef();
+	Arm& arm1 = start.GetArm1Ref();
+	Arm& arm2 = start.GetArm2Ref();
+	Arm& arm3 = end.GetArm1Ref();
+	Arm& arm4 = end.GetArm2Ref();
 
 	if (ImGui::DragFloat("arm1 length", &arm1.GetLengthRef()))
 		arm3.SetLength(arm1.GetLength());
@@ -55,29 +56,29 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 
 	ImGui::Spacing();
 	ImGui::Text("Start configuration");
-
 	PushDisabled();
-	ImGui::SliderAngle("arm1 angle", &robot->GetModel()->GetStartRef().GetArm1AngleRef());
+	ImGui::SliderAngle("arm1 angle", &start.GetArm1AngleRef());
 	PopDisabled();
 	ImGui::ColorEdit3("arm1 color", &arm1.GetColorRef()[0]);
-
 	ImGui::Spacing();
-
 	PushDisabled();
-	ImGui::SliderAngle("arm2 angle", &robot->GetModel()->GetStartRef().GetArm2AngleRef());
+	ImGui::SliderAngle("arm2 angle", &start.GetArm2AngleRef());
 	PopDisabled();
 	ImGui::ColorEdit3("arm2 color", &arm2.GetColorRef()[0]);
-
-	ImGui::Checkbox("althernative1", &robot->GetModel()->GetStartRef().GetIsAlthernativeRef());
+	ImGui::Checkbox("althernative start configuration", &robot->GetModel()->GetStartRef().GetIsAlthernativeRef());
 
 	ImGui::Spacing();
 	ImGui::Text("End configuration");
-
-	ImGui::SliderAngle("arm3 angle", &arm3.GetAngleRef());
+	PushDisabled();
+	ImGui::SliderAngle("arm3 angle", &end.GetArm1AngleRef());
+	PopDisabled();
 	ImGui::ColorEdit3("arm3 color", &arm3.GetColorRef()[0]);
 	ImGui::Spacing();
-	ImGui::SliderAngle("arm4 angle", &arm4.GetAngleRef());
+	PushDisabled();
+	ImGui::SliderAngle("arm4 angle", &end.GetArm2AngleRef());
+	PopDisabled();
 	ImGui::ColorEdit3("arm4 color", &arm4.GetColorRef()[0]);
+	ImGui::Checkbox("althernative end configuration", &robot->GetModel()->GetEndRef().GetIsAlthernativeRef());
 
 	ImGui::Separator();
 

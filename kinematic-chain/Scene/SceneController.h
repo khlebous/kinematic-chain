@@ -32,6 +32,7 @@ public:
 	void RenderImGui();
 	void ProcessObstacle(float xpos, float ypos);
 	void ProcessFirstConfiguration(float xpos, float ypos);
+	void ProcessSecondConfiguration(float xpos, float ypos);
 	void OnRightMouseUp();
 	void ProcessWindowResize();
 
