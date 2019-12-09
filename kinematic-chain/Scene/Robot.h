@@ -16,10 +16,11 @@ class Robot
 	std::shared_ptr<ConfigurationSpace> configuration_space;
 
 public:
-	Robot(std::shared_ptr<RobotModel> _m, std::shared_ptr<Shader> _s, std::shared_ptr<Shader> _ts) :
+	Robot(std::shared_ptr<RobotModel> _m, std::shared_ptr<Shader> _s, 
+		std::shared_ptr<Shader> _ts, std::shared_ptr<Shader> _ps) :
 		model(_m),
 		view(std::make_shared<RobotView>(_m, _s)),
-		configuration_space(std::make_shared<ConfigurationSpace>(std::make_shared<ConfigurationSpaceModel>(), _m, _ts)) { }
+		configuration_space(std::make_shared<ConfigurationSpace>(std::make_shared<ConfigurationSpaceModel>(), _m, _ts, _ps)) { }
 	Robot(const Robot& o) :
 		model(std::make_shared<RobotModel>(o.model)),
 		view(std::make_shared<RobotView>(model, o.GetView()->GetShader())) { }

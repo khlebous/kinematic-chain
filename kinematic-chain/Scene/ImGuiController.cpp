@@ -17,7 +17,7 @@ void ImGuiController::Render(std::vector<Obstacle>& obstacles, Robot* robot)
 		}
 		if (ImGui::BeginTabItem("PathFinding"))
 		{
-			RenderPathFindingMode();
+			RenderPathFindingMode(robot);
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();

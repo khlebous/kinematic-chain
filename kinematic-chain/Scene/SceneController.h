@@ -13,6 +13,7 @@ class SceneController
 	std::shared_ptr<Shader> obstacles_shader;
 	std::shared_ptr<Shader> robot_shader;
 	std::shared_ptr<Shader> texture_shader;
+	std::shared_ptr<Shader> points_shader;
 
 	std::shared_ptr<Axes> axes;
 	std::shared_ptr<ImGuiController> imGuiController;

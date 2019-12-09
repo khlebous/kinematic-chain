@@ -81,10 +81,10 @@ int main()
 	// configure global opengl state
 	// -----------------------------
 	glClearColor(0.635f, 0.682f, 0.6f, 1.0f);
-	glEnable(GL_PROGRAM_POINT_SIZE);
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND); //Enable blending.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Set blending function.
+	glEnable(GL_PROGRAM_POINT_SIZE);
 
 	sceneController = std::make_shared<SceneController>();
 
@@ -200,7 +200,13 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	if (button == GLFW_MOUSE_BUTTON_RIGHT)
 	{
 		if (action == GLFW_PRESS)
+		{
 			mouse_right_button_down = true;
+			if (key_f_down)
+				sceneController->ProcessFirstConfiguration(last_x, last_y);
+			else if (key_s_down)
+				sceneController->ProcessSecondConfiguration(last_x, last_y);
+		}
 		else if (action == GLFW_RELEASE)
 		{
 			mouse_right_button_down = false;

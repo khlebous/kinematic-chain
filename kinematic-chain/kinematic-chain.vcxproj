@@ -102,6 +102,7 @@
     <ClCompile Include="Scene\RobotView.cpp" />
     <ClCompile Include="Scene\SceneController.cpp" />
     <ClCompile Include="Utils\ColorConstants.cpp" />
+    <ClCompile Include="Utils\EulerAnglesLimitsUtils.cpp" />
     <ClCompile Include="Utils\ShaderConstants.cpp" />
     <ClCompile Include="Utils\WindowConstants.cpp" />
     <ClCompile Include="Utils\WindowSizeUtils.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="Scene\SceneController.h" />
     <ClInclude Include="Scene\Shader.h" />
     <ClInclude Include="Utils\ColorConstants.h" />
+    <ClInclude Include="Utils\EulerAnglesLimitsUtils.h" />
     <ClInclude Include="Utils\ShaderConstants.h" />
     <ClInclude Include="Utils\WindowConstants.h" />
     <ClInclude Include="Utils\WindowSizeUtils.h" />
@@ -142,6 +144,8 @@
     <None Include="Resources\Shaders\AxesShader.vs" />
     <None Include="Resources\Shaders\ObstaclesShader.fs" />
     <None Include="Resources\Shaders\ObstaclesShader.vs" />
+    <None Include="Resources\Shaders\PointsShader.fs" />
+    <None Include="Resources\Shaders\PointsShader.vs" />
     <None Include="Resources\Shaders\RobotShader.fs" />
     <None Include="Resources\Shaders\RobotShader.vs" />
     <None Include="Resources\Shaders\TextureShader.fs" />

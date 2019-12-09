@@ -138,6 +138,9 @@
     <ClCompile Include="Scene\ConfigurationSpaceModel.cpp">
       <Filter>Source Files\Scene\Robot\ConfigurationSpace</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\EulerAnglesLimitsUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ImGui\imconfig.h">
@@ -227,6 +230,9 @@
     <ClInclude Include="Scene\ConfigurationSpaceView.h">
       <Filter>Header Files\Scene\Robot\ConfigurationSpace</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\EulerAnglesLimitsUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\AxesShader.fs">
@@ -251,6 +257,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\TextureShader.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\PointsShader.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\PointsShader.vs">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

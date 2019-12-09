@@ -20,7 +20,7 @@ class ConfigurationSpace
 
 public:
 	ConfigurationSpace(std::shared_ptr<ConfigurationSpaceModel> _m, std::shared_ptr<RobotModel> _rm,
-		std::shared_ptr<Shader> _ts); 
+		std::shared_ptr<Shader> _ts, std::shared_ptr<Shader> _rs);
 
 	void UpdateParametrization(const std::vector<Obstacle>& obstacles);
 	void Render() { view->Render(); }

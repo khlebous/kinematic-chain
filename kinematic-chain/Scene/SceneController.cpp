@@ -11,6 +11,7 @@ SceneController::SceneController() :
 	obstacles_shader = std::make_shared<Shader>("ObstaclesShader.vs", "ObstaclesShader.fs");
 	robot_shader = std::make_shared<Shader>("RobotShader.vs", "RobotShader.fs");
 	texture_shader = std::make_shared<Shader>("TextureShader.vs", "TextureShader.fs");
+	points_shader = std::make_shared<Shader>("PointsShader.vs", "PointsShader.fs");
 
 	imGuiController = std::make_shared<ImGuiController>();
 
@@ -26,7 +27,7 @@ SceneController::SceneController() :
 	RobotConfiguration start = RobotConfiguration(start_arm1, start_arm2);
 	RobotConfiguration end = RobotConfiguration(end_arm1, end_arm2);
 	std::shared_ptr<RobotModel> robotModel = std::make_shared<RobotModel>(start, end);
-	robot = std::make_shared<Robot>(robotModel, robot_shader, texture_shader);
+	robot = std::make_shared<Robot>(robotModel, robot_shader, texture_shader, points_shader);
 }
 
 void SceneController::Update(float deltaTime)
@@ -106,6 +107,10 @@ void SceneController::UpdateShaders()
 	texture_shader->use();
 	texture_shader->setMat4(ShaderConstants::VIEW_MTX, camera->View);
 	texture_shader->setMat4(ShaderConstants::PROJECTION_MTX, camera->Projection);
+
+	points_shader->use();
+	points_shader->setMat4(ShaderConstants::VIEW_MTX, camera->View);
+	points_shader->setMat4(ShaderConstants::PROJECTION_MTX, camera->Projection);
 
 	glUseProgram(0);
 }
