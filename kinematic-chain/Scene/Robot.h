@@ -1,12 +1,13 @@
 #pragma once
 #include <memory>
-#include <limits>
 #include <vector>
+#include <glm/gtc/constants.hpp>
 #include "RobotModel.h"
 #include "RobotView.h"
 #include "Obstacle.h"
 #include "ConfigurationSpace.h"
-#define N 360
+
+#include "..//Utils/WindowSizeUtils.h"
 
 class Robot
 {
@@ -30,4 +31,10 @@ public:
 	void Render();
 	void UpdateParametrization(const std::vector<Obstacle>& obstacles) { configuration_space->UpdateParametrization(obstacles); }
 	void ProcessWindowResize() { configuration_space->OnWindowSizeChanged(); }
+	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
+	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }
+
+private:
+	glm::vec4 GetNewParametrizations(float x, float y);
+	void ProcessConfiguration(RobotConfiguration& configuration, float xpos, float ypos);
 };

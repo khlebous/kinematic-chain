@@ -42,13 +42,13 @@ void RobotView::Render()
 	glUseProgram(0);
 }
 
-
 void RobotView::RenderConfiguration(RobotConfiguration& configuration)
 {
 	Arm& arm1 = configuration.GetArm1Ref();
-
+	float arm1_angle = configuration.GetArm1Angle();
+	
 	glm::mat4 s_matrix = glm::scale(glm::mat4(1), glm::vec3(arm1.GetLength(), 0, 0));
-	glm::mat4 r_matrix = glm::rotate(glm::mat4(1), arm1.GetAngle(), { 0, 0, 1 });
+	glm::mat4 r_matrix = glm::rotate(glm::mat4(1), arm1_angle, { 0, 0, 1 });
 
 	shader->setMat4(ShaderConstants::MODEL_MTX,
 		r_matrix * s_matrix
@@ -57,13 +57,14 @@ void RobotView::RenderConfiguration(RobotConfiguration& configuration)
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 
 	Arm& arm2 = configuration.GetArm2Ref();
-
+	float arm2_angle = configuration.GetArm2Angle();
+	
 	glm::mat4 t2_matrix = glm::translate(glm::mat4(1), glm::vec3(
-		glm::cos(arm1.GetAngle()) * arm1.GetLength(),
-		glm::sin(arm1.GetAngle()) * arm1.GetLength(),
+		glm::cos(arm1_angle) * arm1.GetLength(),
+		glm::sin(arm1_angle) * arm1.GetLength(),
 		0));
 	glm::mat4 s2_matrix = glm::scale(glm::mat4(1), glm::vec3(arm2.GetLength(), 0, 0));
-	glm::mat4 r2_matrix = glm::rotate(glm::mat4(1), arm1.GetAngle() + arm2.GetAngle(), { 0, 0, 1 });
+	glm::mat4 r2_matrix = glm::rotate(glm::mat4(1), arm1_angle + arm2_angle, { 0, 0, 1 });
 	shader->setMat4(ShaderConstants::MODEL_MTX,
 		t2_matrix * r2_matrix * s2_matrix
 	);
