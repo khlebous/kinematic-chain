@@ -40,6 +40,13 @@ glm::vec4 Robot::GetNewParametrizations(float x, float y)
 void Robot::ProcessConfiguration(RobotConfiguration& configuration, float xpos, float ypos)
 {
 	glm::vec2 pos = WindowSizeUtils::ParsePos(xpos, ypos);
+	if (glm::length(pos) > configuration.GetArm1Ref().GetLength() + configuration.GetArm2Ref().GetLength() ||
+		glm::length(pos) < configuration.GetArm1Ref().GetLength() - configuration.GetArm2Ref().GetLength())
+	{
+		// TODO set parametrization is not correct
+		return;
+	}
+
 	glm::vec4 param = GetNewParametrizations(pos.x, pos.y);
 
 	configuration.GetArm1Ref().SetAngle(param.x);
