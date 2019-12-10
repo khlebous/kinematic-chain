@@ -1,6 +1,7 @@
 #include "ConfigurationSpace.h"
 #include <queue>
 typedef std::pair<int, int> pair_int;
+typedef std::pair<pair_int, int> tuple_int;
 
 ConfigurationSpace::ConfigurationSpace(std::shared_ptr<ConfigurationSpaceModel> _m,
 	std::shared_ptr<RobotModel> _rm, std::shared_ptr<Shader> _ts, std::shared_ptr<Shader> _rs) :
@@ -23,37 +24,38 @@ void ConfigurationSpace::UpdateParametrization(const std::vector<Obstacle>& obst
 
 void ConfigurationSpace::DoFloodFill(size_t start_arm1, size_t start_arm2, size_t end_arm1, size_t end_arm2)
 {
-	std::queue<pair_int> queue;
-	queue.push(pair_int(start_arm1, start_arm2));
-
-	int current_value = 1;
+	std::queue<tuple_int> queue;
+	queue.push(tuple_int(pair_int(start_arm1, start_arm2), 0));
 
 	auto WrapF = [](int value, int precision) { return value < 0 ? value + precision : value % precision; };
 	while (!queue.empty())
 	{
-		pair_int p = queue.front();
+		tuple_int p = queue.front();
 		queue.pop();
-		int x = p.first;
-		int y = p.second;
+
+		int x = p.first.first;
+		int y = p.first.second;
 
 		if (x < 0 || x >= N || y < 0 || y >= N)
 			continue;
 
-		if (x == end_arm1 && y == end_arm2)
-			break;
-
 		if (model->distance[x][y] != -1)
 			continue;
 
-		model->distance[x][y] = current_value;
+		model->distance[x][y] = p.second;
+		if (x == end_arm1 && y == end_arm2)
+		{
+			break;
+		}
 
-		queue.push(pair_int(WrapF(x + 1, N), WrapF(y, N)));
-		queue.push(pair_int(WrapF(x - 1, N), WrapF(y, N)));
-		queue.push(pair_int(WrapF(x, N), WrapF(y + 1, N)));
-		queue.push(pair_int(WrapF(x, N), WrapF(y - 1, N)));
-
-		current_value++;
+		queue.push(tuple_int(pair_int(WrapF(x + 1, N), WrapF(y, N)), p.second + 1));
+		queue.push(tuple_int(pair_int(WrapF(x - 1, N), WrapF(y, N)), p.second + 1));
+		queue.push(tuple_int(pair_int(WrapF(x, N), WrapF(y + 1, N)), p.second + 1));
+		queue.push(tuple_int(pair_int(WrapF(x, N), WrapF(y - 1, N)), p.second + 1));
 	}
+
+	int* start = &model->distance[0][0];
+	int value = *std::max_element(start, start + N * N);
 
 	for (size_t i = 0; i < N; i++)
 	{
@@ -62,8 +64,48 @@ void ConfigurationSpace::DoFloodFill(size_t start_arm1, size_t start_arm2, size_
 			if (model->distance[i][j] == model->obstacle || model->distance[i][j] == model->no_data)
 				continue;
 
-			model->colors[i][j] = glm::vec3(1.0 - model->distance[i][j] / (float)current_value);
+			model->colors[i][j] = glm::vec3(1.0 - model->distance[i][j] / (float)value);
 		}
+	}
+
+	if (model->distance[end_arm1][end_arm2] != -1)
+	{
+		std::vector<float> path;
+		path.push_back(end_arm1);
+		path.push_back(end_arm2);;
+
+		value = model->distance[end_arm1][end_arm2];
+		while (value > 0)
+		{
+			float last_x = path[path.size() - 2];
+			float last_y = path[path.size() - 1];
+
+			if (model->distance[WrapF(last_x + 1, N)][WrapF(last_y, N)] == value)
+			{
+				path.push_back(WrapF(last_x + 1, N));
+				path.push_back(WrapF(last_y, N));
+			}
+			else if (model->distance[WrapF(last_x - 1, N)][WrapF(last_y, N)] == value)
+			{
+				path.push_back(WrapF(last_x - 1, N));
+				path.push_back(WrapF(last_y, N));
+			}
+			else if (model->distance[WrapF(last_x, N)][WrapF(last_y + 1, N)] == value)
+			{
+				path.push_back(WrapF(last_x, N));
+				path.push_back(WrapF(last_y + 1, N));
+			}
+			else if (model->distance[WrapF(last_x, N)][WrapF(last_y - 1, N)] == value)
+			{
+				path.push_back(WrapF(last_x, N));
+				path.push_back(WrapF(last_y - 1, N));
+			}
+
+			value--;
+		}
+
+		model->path.clear();
+		model->path = path;
 	}
 
 	view->UpdateTextureData();

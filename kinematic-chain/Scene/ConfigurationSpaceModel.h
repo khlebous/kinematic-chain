@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <glm/glm.hpp>
 #define N 360
 
@@ -10,6 +11,7 @@ public:
 
 	glm::vec3 colors[N][N];
 	int distance[N][N];
+	std::vector<float> path;
 
 	ConfigurationSpaceModel();
 };

@@ -1,6 +1,5 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
 
 class EulerAnglesLimitsUtils
 {
@@ -20,8 +19,8 @@ public:
 	{
 		int out = a;
 
-		while (out > 360)	out -= 360;
-		while (out < 0)	out += 360;
+		while (out > maxAngle)	out -= maxAngle;
+		while (out < 0)	out += maxAngle;
 
 		return (size_t)out;
 	}

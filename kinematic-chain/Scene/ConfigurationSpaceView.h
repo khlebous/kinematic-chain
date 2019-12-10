@@ -11,7 +11,7 @@ class ConfigurationSpaceView
 	std::shared_ptr<ConfigurationSpaceModel> model;
 	std::shared_ptr<RobotModel> robot_model;
 	std::shared_ptr<Shader> texture_shader;
-	std::shared_ptr<Shader> robot_shader;
+	std::shared_ptr<Shader> points_shader;
 
 	unsigned int texture1;
 	unsigned int VBO, VAO, EBO;
