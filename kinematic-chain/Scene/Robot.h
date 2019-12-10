@@ -37,7 +37,7 @@ public:
 	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
 	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }
 	void DoFloodFill();
-	void UpdateCurrent(float simulation_percentage);
+	void UpdateCurrentConfiguration(float simulation_percentage);
 
 private:
 	glm::vec4 GetNewParametrizations(float x, float y);

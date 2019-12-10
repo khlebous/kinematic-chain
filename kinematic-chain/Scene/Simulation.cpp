@@ -25,7 +25,7 @@ void Simulation::Update(float delta_time)
 		isSimulating = false;
 	}
 
-	robot->UpdateCurrent(current_time / simulation_time);
+	robot->UpdateCurrentConfiguration(current_time / simulation_time);
 }
 
 void Simulation::Render()

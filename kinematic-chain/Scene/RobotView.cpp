@@ -50,6 +50,8 @@ void RobotView::RenderConfiguration(RobotConfiguration& configuration)
 	Arm& arm1 = configuration.GetArm1Ref();
 	float arm1_angle = configuration.GetArm1Angle();
 
+	shader->setFloat(ShaderConstants::OPACITY, configuration.GetIsCorrect() ? 1.0f : 0.2f);
+
 	glm::mat4 s_matrix = glm::scale(glm::mat4(1), glm::vec3(arm1.GetLength(), 0, 0));
 	glm::mat4 r_matrix = glm::rotate(glm::mat4(1), arm1_angle, { 0, 0, 1 });
 
