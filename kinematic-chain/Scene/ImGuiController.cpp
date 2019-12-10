@@ -111,9 +111,13 @@ void ImGuiController::RenderEditMode(std::vector<Obstacle>& obstacles, Robot* ro
 	}
 }
 
-void ImGuiController::RenderPathFindingMode()
+void ImGuiController::RenderPathFindingMode(Robot* robot)
 {
 	ImGui::Text("Path finding mode");
+	if (ImGui::Button("Flood fill"))
+	{
+		robot->FloodFill();
+	}
 }
 
 void ImGuiController::PushDisabled()

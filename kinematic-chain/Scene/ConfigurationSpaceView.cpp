@@ -61,7 +61,7 @@ void ConfigurationSpaceView::Render()
 void ConfigurationSpaceView::UpdateTextureData()
 {
 	glBindTexture(GL_TEXTURE_2D, texture1);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, N, N, 0, GL_RGB, GL_FLOAT, model->param);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, N, N, 0, GL_RGB, GL_FLOAT, model->colors);
 }
 
 void ConfigurationSpaceView::UpdateTexture()
@@ -70,7 +70,7 @@ void ConfigurationSpaceView::UpdateTexture()
 	glBindTexture(GL_TEXTURE_2D, texture1);
 
 	// TODO GL_UNSIGNED_BYTE instead of GL_FLOAT ?
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, N, N, 0, GL_RGB, GL_FLOAT, model->param);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, N, N, 0, GL_RGB, GL_FLOAT, model->colors);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	float width_half = WindowConstants::WIDTH / 2.0f;

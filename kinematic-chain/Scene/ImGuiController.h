@@ -19,7 +19,7 @@ public:
 private:
 	void RenderMainMenuBar();
 	void RenderEditMode(std::vector<Obstacle>& obstacles, Robot* robot);
-	void RenderPathFindingMode();
+	void RenderPathFindingMode(Robot* robot);
 
 	void PushDisabled();
 	void PopDisabled();

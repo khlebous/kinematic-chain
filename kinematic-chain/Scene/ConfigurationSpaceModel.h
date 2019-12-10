@@ -5,7 +5,11 @@
 class ConfigurationSpaceModel
 {
 public:
-	glm::vec3 param[N][N];
+	int no_data = -1;
+	int obstacle = -2;
+
+	glm::vec3 colors[N][N];
+	int distance[N][N];
 
 	ConfigurationSpaceModel();
 };

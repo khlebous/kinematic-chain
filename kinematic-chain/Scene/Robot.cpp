@@ -14,6 +14,17 @@ void Robot::Render()
 	configuration_space->Render();
 }
 
+void Robot::FloodFill()
+{
+	size_t start_arm1 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetStartRef().GetArm1Angle()));
+	size_t start_arm2 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetStartRef().GetArm2Angle()));
+
+	size_t end_arm1 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetEndRef().GetArm1Angle()));
+	size_t end_arm2 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetEndRef().GetArm2Angle()));
+
+	configuration_space->DoFloodFill(start_arm1, start_arm2, end_arm1, end_arm2);
+}
+
 glm::vec4 Robot::GetNewParametrizations(float x, float y)
 {
 	float l1 = model->GetStartRef().GetArm1Ref().GetLength();
