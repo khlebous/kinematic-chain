@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 #include "RobotModel.h"
 #include "RobotView.h"
@@ -8,7 +9,7 @@
 #include "ConfigurationSpace.h"
 
 #include "..//Utils/WindowSizeUtils.h"
-#include "..//Utils/EulerAnglesLimitsUtils.h"
+#include "..//Utils/EulerUtils.h"
 
 class Robot
 {
@@ -36,20 +37,7 @@ public:
 	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
 	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }
 	void DoFloodFill();
-	void UpdateCurrent(float simulation_percentage)
-	{
-		std::cout << simulation_percentage << std::endl;
-
-		float a1 = model->GetStartRef().GetArm1Angle();
-		float a2 = model->GetEndRef().GetArm1Angle();
-		std::cout << a1 << " " << a2 << " " << a1 + (a2 - a1) * simulation_percentage << std::endl;
-
-		float a3 = model->GetStartRef().GetArm2Angle();
-		float a4 = model->GetEndRef().GetArm2Angle();
-
-		model->GetCurrentRef().GetArm1Ref().SetAngle(a1 + (a2 - a1) * simulation_percentage);
-		model->GetCurrentRef().GetArm2Ref().SetAngle(a3 + (a4 - a3) * simulation_percentage);
-	}
+	void UpdateCurrent(float simulation_percentage);
 
 private:
 	glm::vec4 GetNewParametrizations(float x, float y);

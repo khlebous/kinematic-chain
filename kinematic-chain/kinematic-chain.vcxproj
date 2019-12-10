@@ -104,7 +104,7 @@
     <ClCompile Include="Scene\SceneController.cpp" />
     <ClCompile Include="Scene\Simulation.cpp" />
     <ClCompile Include="Utils\ColorConstants.cpp" />
-    <ClCompile Include="Utils\EulerAnglesLimitsUtils.cpp" />
+    <ClCompile Include="Utils\EulerUtils.cpp" />
     <ClCompile Include="Utils\ShaderConstants.cpp" />
     <ClCompile Include="Utils\WindowConstants.cpp" />
     <ClCompile Include="Utils\WindowSizeUtils.cpp" />
@@ -138,7 +138,7 @@
     <ClInclude Include="Scene\Shader.h" />
     <ClInclude Include="Scene\Simulation.h" />
     <ClInclude Include="Utils\ColorConstants.h" />
-    <ClInclude Include="Utils\EulerAnglesLimitsUtils.h" />
+    <ClInclude Include="Utils\EulerUtils.h" />
     <ClInclude Include="Utils\ImGuiUtils.h" />
     <ClInclude Include="Utils\ShaderConstants.h" />
     <ClInclude Include="Utils\WindowConstants.h" />

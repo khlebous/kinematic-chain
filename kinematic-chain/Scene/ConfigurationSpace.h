@@ -27,6 +27,9 @@ public:
 	void OnWindowSizeChanged() { view->OnWindowSizeChanged(); }
 
 	void DoFloodFill(size_t start_arm1, size_t start_arm2, size_t end_arm1, size_t end_arm2);
+	size_t GetPathSize() { return model->path.size() / 2; }
+	float GetPathElementX(size_t idx) { return model->path[2 * idx]; }
+	float GetPathElementY(size_t idx) { return model->path[2 * idx + 1]; }
 
 private:
 	bool Collides(const std::vector<float>& p, const std::vector<float>& q)

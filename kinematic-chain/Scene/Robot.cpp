@@ -16,13 +16,32 @@ void Robot::Render(bool isRunning)
 
 void Robot::DoFloodFill()
 {
-	size_t start_arm1 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetStartRef().GetArm1Angle()));
-	size_t start_arm2 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetStartRef().GetArm2Angle()));
+	size_t start_arm1 = (size_t)EulerUtils::GetCorrectedAngle(glm::degrees(model->GetStartRef().GetArm1Angle()));
+	size_t start_arm2 = (size_t)EulerUtils::GetCorrectedAngle(glm::degrees(model->GetStartRef().GetArm2Angle()));
 
-	size_t end_arm1 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetEndRef().GetArm1Angle()));
-	size_t end_arm2 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetEndRef().GetArm2Angle()));
+	size_t end_arm1 = (size_t)EulerUtils::GetCorrectedAngle(glm::degrees(model->GetEndRef().GetArm1Angle()));
+	size_t end_arm2 = (size_t)EulerUtils::GetCorrectedAngle(glm::degrees(model->GetEndRef().GetArm2Angle()));
 
 	configuration_space->DoFloodFill(start_arm1, start_arm2, end_arm1, end_arm2);
+}
+
+void Robot::UpdateCurrentConfiguration(float simulation_percentage)
+{
+	size_t path_size = configuration_space->GetPathSize();
+	size_t path_idx = (size_t)glm::min(simulation_percentage * (path_size - 1), (float)(path_size - 2));
+
+	float path_idx_pers = (float)path_idx / (path_size - 1);
+	float path_idx_plus_one_pers = (float)(path_idx + 1) / (path_size - 1);
+
+	float new_persentage = (simulation_percentage - path_idx_pers) / (path_idx_plus_one_pers - path_idx_pers);
+
+	float a1 = configuration_space->GetPathElementX(path_idx);
+	float a2 = configuration_space->GetPathElementX(path_idx + 1);
+	float a3 = configuration_space->GetPathElementY(path_idx);
+	float a4 = configuration_space->GetPathElementY(path_idx + 1);
+
+	model->GetCurrentRef().GetArm1Ref().SetAngle(glm::radians(EulerUtils::GetEulerRotation(a1, a2, new_persentage)));
+	model->GetCurrentRef().GetArm2Ref().SetAngle(glm::radians(EulerUtils::GetEulerRotation(a3, a4, new_persentage)));
 }
 
 glm::vec4 Robot::GetNewParametrizations(float x, float y)

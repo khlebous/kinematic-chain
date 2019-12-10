@@ -68,44 +68,43 @@ void ConfigurationSpace::DoFloodFill(size_t start_arm1, size_t start_arm2, size_
 		}
 	}
 
+	model->path.clear();
 	if (model->distance[end_arm1][end_arm2] != -1)
 	{
-		std::vector<float> path;
-		path.push_back(end_arm1);
-		path.push_back(end_arm2);;
+		
+		model->path.push_back(end_arm1);
+		model->path.push_back(end_arm2);;
 
 		value = model->distance[end_arm1][end_arm2];
 		while (value > 0)
 		{
-			float last_x = path[path.size() - 2];
-			float last_y = path[path.size() - 1];
+			float last_x = model->path[model->path.size() - 2];
+			float last_y = model->path[model->path.size() - 1];
 
 			if (model->distance[WrapF(last_x + 1, N)][WrapF(last_y, N)] == value)
 			{
-				path.push_back(WrapF(last_x + 1, N));
-				path.push_back(WrapF(last_y, N));
+				model->path.push_back(WrapF(last_x + 1, N));
+				model->path.push_back(WrapF(last_y, N));
 			}
 			else if (model->distance[WrapF(last_x - 1, N)][WrapF(last_y, N)] == value)
 			{
-				path.push_back(WrapF(last_x - 1, N));
-				path.push_back(WrapF(last_y, N));
+				model->path.push_back(WrapF(last_x - 1, N));
+				model->path.push_back(WrapF(last_y, N));
 			}
 			else if (model->distance[WrapF(last_x, N)][WrapF(last_y + 1, N)] == value)
 			{
-				path.push_back(WrapF(last_x, N));
-				path.push_back(WrapF(last_y + 1, N));
+				model->path.push_back(WrapF(last_x, N));
+				model->path.push_back(WrapF(last_y + 1, N));
 			}
 			else if (model->distance[WrapF(last_x, N)][WrapF(last_y - 1, N)] == value)
 			{
-				path.push_back(WrapF(last_x, N));
-				path.push_back(WrapF(last_y - 1, N));
+				model->path.push_back(WrapF(last_x, N));
+				model->path.push_back(WrapF(last_y - 1, N));
 			}
 
 			value--;
 		}
 
-		model->path.clear();
-		model->path = path;
 	}
 
 	view->UpdateTextureData();
