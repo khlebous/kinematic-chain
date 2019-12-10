@@ -50,7 +50,7 @@ void ImGuiSimulation::SimulationParametres()
 		ImGui::Text(simulation->isPaused ? "true" : "false");
 	}
 
-	ImGui::Text("Time %.1f", simulation->time);
+	ImGui::Text("Time %.1f", simulation->current_time);
 
 	bool startButtonDisabled = simulation->isSimulating && !simulation->isPaused;
 	StartSimulationButton(startButtonDisabled);
@@ -65,7 +65,7 @@ void ImGuiSimulation::SimulationParametres()
 	bool stopButtonDisabled = !simulation->isSimulating;
 	StopSimulationButton(stopButtonDisabled);
 
-	ImGui::DragFloat("delta", &simulation->delta, 0.001f);
+	ImGui::DragFloat("delta", &simulation->simulation_time, 0.001f);
 	ImGui::SliderFloat("simulation_speed", &simulation->simulation_speed, 1.0f, 10.0f);
 }
 

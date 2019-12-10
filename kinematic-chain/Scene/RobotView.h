@@ -13,7 +13,7 @@ public:
 
 	const std::shared_ptr<Shader> GetShader() { return shader; };
 
-	void Render();
+	void Render(bool isRunning);
 
 private:
 	void RenderConfiguration(RobotConfiguration& configuration);

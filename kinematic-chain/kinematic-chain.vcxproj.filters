@@ -144,14 +144,14 @@
     <ClCompile Include="Scene\ConfigurationSpaceModel.cpp">
       <Filter>Source Files\Scene\Robot\ConfigurationSpace</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\EulerAnglesLimitsUtils.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\Simulation.cpp">
       <Filter>Source Files\Scene\Simulation</Filter>
     </ClCompile>
     <ClCompile Include="Scene\ImGuiSimulation.cpp">
       <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\EulerUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +242,6 @@
     <ClInclude Include="Scene\ConfigurationSpaceView.h">
       <Filter>Header Files\Scene\Robot\ConfigurationSpace</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\EulerAnglesLimitsUtils.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\Simulation.h">
       <Filter>Header Files\Scene\Simulation</Filter>
     </ClInclude>
@@ -253,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="Scene\ImGuiSimulation.h">
       <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\EulerUtils.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
