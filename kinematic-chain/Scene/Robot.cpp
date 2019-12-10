@@ -14,6 +14,17 @@ void Robot::Render()
 	configuration_space->Render();
 }
 
+void Robot::DoFloodFill()
+{
+	size_t start_arm1 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetStartRef().GetArm1Angle()));
+	size_t start_arm2 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetStartRef().GetArm2Angle()));
+
+	size_t end_arm1 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetEndRef().GetArm1Angle()));
+	size_t end_arm2 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetEndRef().GetArm2Angle()));
+
+	configuration_space->DoFloodFill(start_arm1, start_arm2, end_arm1, end_arm2);
+}
+
 glm::vec4 Robot::GetNewParametrizations(float x, float y)
 {
 	float l1 = model->GetStartRef().GetArm1Ref().GetLength();
@@ -40,6 +51,13 @@ glm::vec4 Robot::GetNewParametrizations(float x, float y)
 void Robot::ProcessConfiguration(RobotConfiguration& configuration, float xpos, float ypos)
 {
 	glm::vec2 pos = WindowSizeUtils::ParsePos(xpos, ypos);
+	if (glm::length(pos) > configuration.GetArm1Ref().GetLength() + configuration.GetArm2Ref().GetLength() ||
+		glm::length(pos) < configuration.GetArm1Ref().GetLength() - configuration.GetArm2Ref().GetLength())
+	{
+		// TODO set parametrization is not correct
+		return;
+	}
+
 	glm::vec4 param = GetNewParametrizations(pos.x, pos.y);
 
 	configuration.GetArm1Ref().SetAngle(param.x);

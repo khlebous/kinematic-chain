@@ -20,11 +20,13 @@ class ConfigurationSpace
 
 public:
 	ConfigurationSpace(std::shared_ptr<ConfigurationSpaceModel> _m, std::shared_ptr<RobotModel> _rm,
-		std::shared_ptr<Shader> _ts); 
+		std::shared_ptr<Shader> _ts, std::shared_ptr<Shader> _rs);
 
 	void UpdateParametrization(const std::vector<Obstacle>& obstacles);
 	void Render() { view->Render(); }
 	void OnWindowSizeChanged() { view->OnWindowSizeChanged(); }
+
+	void DoFloodFill(size_t start_arm1, size_t start_arm2, size_t end_arm1, size_t end_arm2);
 
 private:
 	bool Collides(const std::vector<float>& p, const std::vector<float>& q)
@@ -243,14 +245,16 @@ private:
 		//if (Collides(GetPForArm1(arm1_angle), GetQ(obstacle, GetPosForArm1())))
 		if (Collides1(obstacle, arm1_angle))
 		{
-			model->param[arm1_angle][arm2_angle] = obstacle.GetModel()->GetColor();
+			model->colors[arm1_angle][arm2_angle] = obstacle.GetModel()->GetColor();
+			model->distance[arm1_angle][arm2_angle] = model->obstacle;
 			return;
 		}
 
 		//if (Collides(GetPForArm2(arm1_angle, arm2_angle), GetQ(obstacle, GetPosForArm2(arm1_angle))))
 		if (Collides2(obstacle, arm1_angle, arm2_angle))
 		{
-			model->param[arm1_angle][arm2_angle] = obstacle.GetModel()->GetColor();
+			model->colors[arm1_angle][arm2_angle] = obstacle.GetModel()->GetColor();
+			model->distance[arm1_angle][arm2_angle] = model->obstacle;
 		}
 	}
 };

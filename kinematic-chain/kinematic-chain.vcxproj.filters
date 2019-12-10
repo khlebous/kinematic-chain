@@ -52,6 +52,12 @@
     <Filter Include="Source Files\Scene\Robot\ConfigurationSpace">
       <UniqueIdentifier>{b438c8af-622c-4b06-98b2-4cc4f574feab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Scene\Simulation">
+      <UniqueIdentifier>{94f8bcb0-c8f2-47b9-a61f-f197c4e9bebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Simulation">
+      <UniqueIdentifier>{f0315263-c25a-4b7e-b4b2-35b12ac47093}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -137,6 +143,15 @@
     </ClCompile>
     <ClCompile Include="Scene\ConfigurationSpaceModel.cpp">
       <Filter>Source Files\Scene\Robot\ConfigurationSpace</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\EulerAnglesLimitsUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Simulation.cpp">
+      <Filter>Source Files\Scene\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ImGuiSimulation.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +242,18 @@
     <ClInclude Include="Scene\ConfigurationSpaceView.h">
       <Filter>Header Files\Scene\Robot\ConfigurationSpace</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\EulerAnglesLimitsUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Simulation.h">
+      <Filter>Header Files\Scene\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ImGuiUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ImGuiSimulation.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\AxesShader.fs">
@@ -251,6 +278,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\TextureShader.vs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\PointsShader.fs">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\PointsShader.vs">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
