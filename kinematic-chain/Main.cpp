@@ -188,10 +188,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	{
 		if (key_o_down)
 			sceneController->ProcessObstacle(xpos, ypos);
-		else if (key_f_down)
-			sceneController->ProcessFirstConfiguration(xpos, ypos);
-		else if (key_s_down)
-			sceneController->ProcessSecondConfiguration(xpos, ypos);
 	}
 }
 
