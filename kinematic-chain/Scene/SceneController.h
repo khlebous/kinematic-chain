@@ -6,6 +6,7 @@
 #include "Robot.h"
 #include "..//Utils/WindowSizeUtils.h"
 #include "Camera.h"
+#include "Simulation.h"
 
 class SceneController
 {
@@ -19,10 +20,8 @@ class SceneController
 	std::shared_ptr<ImGuiController> imGuiController;
 	std::shared_ptr<Camera> camera;
 
-	std::vector<Obstacle> obstacles;
-	std::shared_ptr<Robot> robot;
+	std::shared_ptr<Simulation> simulation;
 
-	int mode;
 	bool isCreatingObstacle;
 
 public:

@@ -4,7 +4,6 @@
 SceneController::SceneController() :
 	camera(std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 1.0f), -90.0f, 0.0f, glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)))
 {
-	mode = 0;
 	isCreatingObstacle = false;
 
 	shader = std::make_shared<Shader>("AxesShader.vs", "AxesShader.fs");
@@ -13,7 +12,6 @@ SceneController::SceneController() :
 	texture_shader = std::make_shared<Shader>("TextureShader.vs", "TextureShader.fs");
 	points_shader = std::make_shared<Shader>("PointsShader.vs", "PointsShader.fs");
 
-	imGuiController = std::make_shared<ImGuiController>();
 
 	axes = std::make_shared<Axes>();
 	axes->SetShader(shader);
@@ -27,35 +25,31 @@ SceneController::SceneController() :
 	RobotConfiguration start = RobotConfiguration(start_arm1, start_arm2);
 	RobotConfiguration end = RobotConfiguration(end_arm1, end_arm2);
 	std::shared_ptr<RobotModel> robotModel = std::make_shared<RobotModel>(start, end);
-	robot = std::make_shared<Robot>(robotModel, robot_shader, texture_shader, points_shader);
+	std::shared_ptr<Robot> robot = std::make_shared<Robot>(robotModel, robot_shader, texture_shader, points_shader);
+	simulation = std::make_shared<Simulation>(robot);
+	
+	std::shared_ptr<ImGuiSimulation> imgui_simulation = std::make_shared<ImGuiSimulation>(simulation);
+	imGuiController = std::make_shared<ImGuiController>(imgui_simulation);
 }
 
 void SceneController::Update(float deltaTime)
 {
 	UpdateShaders();
+
+	simulation->Update(deltaTime);
 }
 
 void SceneController::Render()
 {
-	for (size_t i = 0; i < obstacles.size(); i++)
-		obstacles[i].Render();
-
 	axes->Render();
-	robot->Render();
-
-	switch (mode)
-	{
-	case 0: break;
-	case 1: break;
-	default: break;
-	}
+	simulation->Render();
 
 	glUseProgram(0);
 }
 
 void SceneController::RenderImGui()
 {
-	imGuiController->Render(obstacles, robot.get());
+	imGuiController->Render();
 }
 
 void SceneController::ProcessObstacle(float xpos, float ypos)
@@ -71,12 +65,12 @@ void SceneController::ProcessObstacle(float xpos, float ypos)
 
 void SceneController::ProcessFirstConfiguration(float xpos, float ypos)
 {
-	robot->ProcessFirstConfiguration(xpos, ypos);
+	simulation->GetRobot()->ProcessFirstConfiguration(xpos, ypos);
 }
 
 void SceneController::ProcessSecondConfiguration(float xpos, float ypos)
 {
-	robot->ProcessSecondConfiguration(xpos, ypos);
+	simulation->GetRobot()->ProcessSecondConfiguration(xpos, ypos);
 }
 
 void SceneController::OnRightMouseUp()
@@ -87,7 +81,7 @@ void SceneController::OnRightMouseUp()
 void SceneController::ProcessWindowResize()
 {
 	camera->UpdateProjectionMatrix();
-	robot->ProcessWindowResize();
+	simulation->GetRobot()->ProcessWindowResize();
 }
 
 void SceneController::UpdateShaders()
@@ -127,13 +121,14 @@ void SceneController::StartCreatingObstacle(float xpos, float ypos)
 		(float)rand() / RAND_MAX);
 
 	auto model = std::make_shared<ObstacleModel>(position, size, color);
-	obstacles.push_back(Obstacle(model, obstacles_shader));
+	simulation->AddObstacle(Obstacle(model, obstacles_shader));
 }
 
 void SceneController::ContinueCreatingObstacle(float xpos, float ypos)
 {
 	glm::vec2 position = WindowSizeUtils::ParsePos(xpos, ypos);
-	glm::vec2 size = position - obstacles[obstacles.size() - 1].GetModel()->GetPosition();
+	size_t obstacles_size = simulation->GetObstaclesSize();
 
-	obstacles[obstacles.size() - 1].SetSize(size);
+	glm::vec2 size = position - simulation->GetObstacle(obstacles_size - 1).GetModel()->GetPosition();
+	simulation->GetObstacle(obstacles_size - 1).SetSize(size);
 }

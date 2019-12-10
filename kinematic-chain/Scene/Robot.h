@@ -35,7 +35,7 @@ public:
 	void ProcessWindowResize() { configuration_space->OnWindowSizeChanged(); }
 	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
 	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }
-	void FloodFill();
+	void DoFloodFill();
 
 private:
 	glm::vec4 GetNewParametrizations(float x, float y);

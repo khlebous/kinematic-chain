@@ -14,7 +14,7 @@ void Robot::Render()
 	configuration_space->Render();
 }
 
-void Robot::FloodFill()
+void Robot::DoFloodFill()
 {
 	size_t start_arm1 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetStartRef().GetArm1Angle()));
 	size_t start_arm2 = (size_t)EulerAnglesLimitsUtils::GetCorrected(glm::degrees(model->GetStartRef().GetArm2Angle()));

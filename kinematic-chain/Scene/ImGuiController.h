@@ -1,26 +1,18 @@
 #pragma once
-
 #include <memory>
-#include <vector>
-#include "..//ImGui/imgui.h"
-#include "Obstacle.h"
-#include "Robot.h"
+#include "ImGuiSimulation.h"
 
 class ImGuiController
 {
+	std::shared_ptr<ImGuiSimulation> imgui_simulation;
 	bool* inspectorWindow = NULL;
 
 public:
-	ImGuiController() { }
+	ImGuiController(std::shared_ptr<ImGuiSimulation> _s) { imgui_simulation = _s; }
 	~ImGuiController() { }
 
-	void Render(std::vector<Obstacle>& obstacles, Robot* robot);
+	void Render();
 
 private:
 	void RenderMainMenuBar();
-	void RenderEditMode(std::vector<Obstacle>& obstacles, Robot* robot);
-	void RenderPathFindingMode(Robot* robot);
-
-	void PushDisabled();
-	void PopDisabled();
 };
