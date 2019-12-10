@@ -30,7 +30,7 @@ public:
 		glDeleteBuffers(1, &rVBO);
 	}
 
-	void Render();
+	void Render(bool isRunning);
 	void OnWindowSizeChanged() { UpdateTexture(); }
 	void UpdateTextureData();
 

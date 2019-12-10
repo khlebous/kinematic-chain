@@ -8,10 +8,10 @@ Robot& Robot::operator=(const Robot& o)
 	return *this;
 }
 
-void Robot::Render()
+void Robot::Render(bool isRunning)
 {
-	view->Render();
-	configuration_space->Render();
+	view->Render(isRunning);
+	configuration_space->Render(isRunning);
 }
 
 void Robot::DoFloodFill()

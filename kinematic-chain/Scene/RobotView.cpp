@@ -29,7 +29,7 @@ RobotView::RobotView(std::shared_ptr<RobotModel> _m, std::shared_ptr<Shader> _s)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void RobotView::Render()
+void RobotView::Render(bool isRunning)
 {
 	shader->use();
 	glLineWidth(5);
@@ -37,6 +37,9 @@ void RobotView::Render()
 
 	RenderConfiguration(model->GetStartRef());
 	RenderConfiguration(model->GetEndRef());
+
+	if (isRunning)
+		RenderConfiguration(model->GetCurrentRef());
 
 	glBindVertexArray(0);
 	glUseProgram(0);
@@ -46,7 +49,7 @@ void RobotView::RenderConfiguration(RobotConfiguration& configuration)
 {
 	Arm& arm1 = configuration.GetArm1Ref();
 	float arm1_angle = configuration.GetArm1Angle();
-	
+
 	glm::mat4 s_matrix = glm::scale(glm::mat4(1), glm::vec3(arm1.GetLength(), 0, 0));
 	glm::mat4 r_matrix = glm::rotate(glm::mat4(1), arm1_angle, { 0, 0, 1 });
 
@@ -58,7 +61,7 @@ void RobotView::RenderConfiguration(RobotConfiguration& configuration)
 
 	Arm& arm2 = configuration.GetArm2Ref();
 	float arm2_angle = configuration.GetArm2Angle();
-	
+
 	glm::mat4 t2_matrix = glm::translate(glm::mat4(1), glm::vec3(
 		glm::cos(arm1_angle) * arm1.GetLength(),
 		glm::sin(arm1_angle) * arm1.GetLength(),

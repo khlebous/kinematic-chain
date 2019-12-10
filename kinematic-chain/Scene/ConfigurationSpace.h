@@ -23,7 +23,7 @@ public:
 		std::shared_ptr<Shader> _ts, std::shared_ptr<Shader> _rs);
 
 	void UpdateParametrization(const std::vector<Obstacle>& obstacles);
-	void Render() { view->Render(); }
+	void Render(bool isRunning) { view->Render(isRunning); }
 	void OnWindowSizeChanged() { view->OnWindowSizeChanged(); }
 
 	void DoFloodFill(size_t start_arm1, size_t start_arm2, size_t end_arm1, size_t end_arm2);

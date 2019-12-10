@@ -30,12 +30,26 @@ public:
 	RobotModel* GetModel() const { return model.get(); }
 	RobotView* GetView() const { return view.get(); }
 
-	void Render();
+	void Render(bool isRunning);
 	void UpdateParametrization(const std::vector<Obstacle>& obstacles) { configuration_space->UpdateParametrization(obstacles); }
 	void ProcessWindowResize() { configuration_space->OnWindowSizeChanged(); }
 	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
 	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }
 	void DoFloodFill();
+	void UpdateCurrent(float simulation_percentage)
+	{
+		std::cout << simulation_percentage << std::endl;
+
+		float a1 = model->GetStartRef().GetArm1Angle();
+		float a2 = model->GetEndRef().GetArm1Angle();
+		std::cout << a1 << " " << a2 << " " << a1 + (a2 - a1) * simulation_percentage << std::endl;
+
+		float a3 = model->GetStartRef().GetArm2Angle();
+		float a4 = model->GetEndRef().GetArm2Angle();
+
+		model->GetCurrentRef().GetArm1Ref().SetAngle(a1 + (a2 - a1) * simulation_percentage);
+		model->GetCurrentRef().GetArm2Ref().SetAngle(a3 + (a4 - a3) * simulation_percentage);
+	}
 
 private:
 	glm::vec4 GetNewParametrizations(float x, float y);
