@@ -28,6 +28,9 @@ void Robot::DoFloodFill()
 void Robot::UpdateCurrentConfiguration(float simulation_percentage)
 {
 	size_t path_size = configuration_space->GetPathSize();
+	if (path_size == 1)
+		return;
+
 	size_t path_idx = (size_t)glm::min(simulation_percentage * (path_size - 1), (float)(path_size - 2));
 
 	float path_idx_pers = (float)path_idx / (path_size - 1);
@@ -73,9 +76,8 @@ glm::vec4 Robot::GetNewParametrizations(float x, float y)
 	return out;
 }
 
-void Robot::ProcessConfiguration(RobotConfiguration& configuration, float xpos, float ypos)
+void Robot::ProcessConfiguration(RobotConfiguration& configuration, glm::vec2 pos)
 {
-	glm::vec2 pos = WindowSizeUtils::ParsePos(xpos, ypos);
 	if (glm::length(pos) > configuration.GetArm1Ref().GetLength() + configuration.GetArm2Ref().GetLength() ||
 		glm::length(pos) < configuration.GetArm1Ref().GetLength() - configuration.GetArm2Ref().GetLength())
 	{

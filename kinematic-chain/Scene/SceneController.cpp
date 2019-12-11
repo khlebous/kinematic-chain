@@ -17,7 +17,7 @@ SceneController::SceneController() :
 	axes->SetShader(shader);
 
 	float arm1_length = 100.f;
-	float arm2_length = 80.f;
+	float arm2_length = 200.f;
 	Arm start_arm1 = Arm(arm1_length, 0, 0, glm::vec3(0));
 	Arm start_arm2 = Arm(arm2_length, 0, 0, glm::vec3(0.2));
 	Arm end_arm1 = Arm(arm1_length, 0, 0, glm::vec3(0.2));
@@ -65,12 +65,14 @@ void SceneController::ProcessObstacle(float xpos, float ypos)
 
 void SceneController::ProcessFirstConfiguration(float xpos, float ypos)
 {
-	simulation->GetRobot()->ProcessFirstConfiguration(xpos, ypos);
+	glm::vec2 pos = WindowSizeUtils::ParsePos(xpos, ypos);
+	simulation->GetRobot()->ProcessFirstConfiguration(pos);
 }
 
 void SceneController::ProcessSecondConfiguration(float xpos, float ypos)
 {
-	simulation->GetRobot()->ProcessSecondConfiguration(xpos, ypos);
+	glm::vec2 pos = WindowSizeUtils::ParsePos(xpos, ypos);
+	simulation->GetRobot()->ProcessSecondConfiguration(pos);
 }
 
 void SceneController::OnRightMouseUp()
