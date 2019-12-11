@@ -52,7 +52,8 @@ void ImGuiSimulation::SimulationParametres()
 
 	ImGui::Text("Time %.1f", simulation->current_time);
 
-	bool startButtonDisabled = simulation->isSimulating && !simulation->isPaused;
+	bool startButtonDisabled = (simulation->isSimulating && !simulation->isPaused) ||
+		(simulation->GetRobot()->GetConfigurationSpace()->GetPathSize() == 0);
 	StartSimulationButton(startButtonDisabled);
 
 	ImGui::SameLine();
