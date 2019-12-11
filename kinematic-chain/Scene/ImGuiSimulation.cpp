@@ -164,8 +164,13 @@ void ImGuiSimulation::RenderPathFindingMode()
 
 	ImGui::Separator();
 
+	RobotModel* robot = simulation->GetRobot()->GetModel();
+	bool can_flood_fill = !simulation->isSimulating && robot->GetStartRef().GetIsCorrect() && robot->GetEndRef().GetIsCorrect();
+
+	if (!can_flood_fill) ImGuiUtils::PushDisabledWithAlpha();
 	if (ImGui::Button("Flood fill"))
 	{
 		simulation->DoFloodFill();
 	}
+	if (!can_flood_fill) ImGuiUtils::PopDisabled();
 }
