@@ -32,7 +32,7 @@ public:
 	RobotView* GetView() const { return view.get(); }
 
 	void Render(bool isRunning);
-	void UpdateParametrization(const std::vector<Obstacle>& obstacles) { configuration_space->UpdateParametrization(obstacles); }
+	void UpdateConfigurationSpace(const std::vector<Obstacle>& obstacles) { configuration_space->UpdateParametrization(obstacles); }
 	void ProcessWindowResize() { configuration_space->OnWindowSizeChanged(); }
 	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
 	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }

@@ -14,7 +14,7 @@ Simulation::Simulation(std::shared_ptr<Robot> _r)
 
 void Simulation::UpdateParametrization()
 {
-	robot->UpdateParametrization(obstacles); 
+	robot->UpdateConfigurationSpace(obstacles); 
 	robot->CheckRobotConfigurationsCorrect();
 }
 

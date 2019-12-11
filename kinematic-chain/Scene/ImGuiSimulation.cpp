@@ -161,7 +161,8 @@ void ImGuiSimulation::RenderPathFindingMode()
 	{
 		simulation->UpdateParametrization();
 	}
-
+	ImGui::SameLine();
+	ImGuiUtils::HelpMarker("Press U to update");
 	ImGui::Separator();
 
 	RobotModel* robot = simulation->GetRobot()->GetModel();
