@@ -30,12 +30,13 @@ public:
 
 	RobotModel* GetModel() const { return model.get(); }
 	RobotView* GetView() const { return view.get(); }
+	ConfigurationSpace* GetConfigurationSpace() const { return configuration_space.get(); }
 
 	void Render(bool isRunning);
-	void UpdateParametrization(const std::vector<Obstacle>& obstacles) { configuration_space->UpdateParametrization(obstacles); }
+	void UpdateConfigurationSpace(const std::vector<Obstacle>& obstacles) { configuration_space->UpdateParametrization(obstacles); }
 	void ProcessWindowResize() { configuration_space->OnWindowSizeChanged(); }
-	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
-	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }
+	void ProcessFirstConfiguration(glm::vec2 pos) { ProcessConfiguration(model->GetStartRef(), pos); }
+	void ProcessSecondConfiguration(glm::vec2 pos) { ProcessConfiguration(model->GetEndRef(), pos); }
 	void ProcessAlternativeFirstConfiguration() { model->GetStartRef().Switch(); }
 	void ProcessAlternativeSecondConfiguration() { model->GetEndRef().Switch(); }
 	void DoFloodFill();
@@ -44,6 +45,6 @@ public:
 
 private:
 	glm::vec4 GetNewParametrizations(float x, float y);
-	void ProcessConfiguration(RobotConfiguration& configuration, float xpos, float ypos);
+	void ProcessConfiguration(RobotConfiguration& configuration, glm::vec2 pos);
 	void CheckRobotConfigurationsCorrect(RobotConfiguration& configuration);
 };

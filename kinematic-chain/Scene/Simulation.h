@@ -25,7 +25,17 @@ public:
 	void DeleteObstacle(size_t idx) { obstacles.erase(obstacles.begin() + idx); }
 	void AddObstacle(const Obstacle& _o) { obstacles.push_back(_o); }
 	void UpdateParametrization();
-	void DoFloodFill() { robot->DoFloodFill(); }
+	void DoFloodFill() 
+	{
+		if (isSimulating)
+			return;
+		
+		RobotModel* rm = robot->GetModel();
+		if (!rm->GetStartRef().GetIsCorrect() || !rm->GetEndRef().GetIsCorrect())
+			return;
+
+		robot->DoFloodFill(); 
+	}
 
 	void Update(float delta_time);
 	void Render();

@@ -31,4 +31,16 @@ public:
 	float GetArm2Angle() const { return isAlthernative ? arm2.GetAlthernativeAngle() : arm2.GetAngle(); }
 
 	void Switch() { isAlthernative = !isAlthernative; }
+
+	glm::vec2 GetPosition()
+	{
+		return glm::vec2(
+			arm1.GetLength() * glm::cos(arm1.GetAngle()),
+			arm1.GetLength() * glm::sin(arm1.GetAngle())
+		) +
+			glm::vec2(
+				arm2.GetLength() * glm::cos(arm1.GetAngle() + arm2.GetAngle()),
+				arm2.GetLength() * glm::sin(arm1.GetAngle() + arm2.GetAngle())
+			);
+	}
 };

@@ -14,7 +14,7 @@ Simulation::Simulation(std::shared_ptr<Robot> _r)
 
 void Simulation::UpdateParametrization()
 {
-	robot->UpdateParametrization(obstacles); 
+	robot->UpdateConfigurationSpace(obstacles); 
 	robot->CheckRobotConfigurationsCorrect();
 }
 
@@ -53,6 +53,12 @@ void Simulation::StartSimulation()
 	current_time = 0.0f;
 	isSimulating = true;
 	isPaused = false;
+
+	robot->GetModel()->GetCurrentRef().GetArm1Ref().SetLength(
+		robot->GetModel()->GetStartRef().GetArm1Ref().GetLength());
+
+	robot->GetModel()->GetCurrentRef().GetArm2Ref().SetLength(
+		robot->GetModel()->GetStartRef().GetArm2Ref().GetLength());
 
 	//model->ResetParametres();
 }

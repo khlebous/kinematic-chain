@@ -52,7 +52,8 @@ void ImGuiSimulation::SimulationParametres()
 
 	ImGui::Text("Time %.1f", simulation->current_time);
 
-	bool startButtonDisabled = simulation->isSimulating && !simulation->isPaused;
+	bool startButtonDisabled = (simulation->isSimulating && !simulation->isPaused) ||
+		(simulation->GetRobot()->GetConfigurationSpace()->GetPathSize() == 0);
 	StartSimulationButton(startButtonDisabled);
 
 	ImGui::SameLine();
@@ -161,7 +162,8 @@ void ImGuiSimulation::RenderPathFindingMode()
 	{
 		simulation->UpdateParametrization();
 	}
-
+	ImGui::SameLine();
+	ImGuiUtils::HelpMarker("Press U to update");
 	ImGui::Separator();
 
 	RobotModel* robot = simulation->GetRobot()->GetModel();
@@ -172,5 +174,7 @@ void ImGuiSimulation::RenderPathFindingMode()
 	{
 		simulation->DoFloodFill();
 	}
+	ImGui::SameLine();
+	ImGuiUtils::HelpMarker("Press F to update. Flood fill is done for current configuration space.");
 	if (!can_flood_fill) ImGuiUtils::PopDisabled();
 }

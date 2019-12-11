@@ -35,6 +35,8 @@ public:
 	void ProcessSecondConfiguration(float xpos, float ypos);
 	void ProcessAlternativeFirstConfiguration() { simulation->GetRobot()->ProcessAlternativeFirstConfiguration(); }
 	void ProcessAlternativeSecondConfiguration() { simulation->GetRobot()->ProcessAlternativeSecondConfiguration(); }
+	void UpdateConfigurationSpace() { simulation->UpdateParametrization(); }
+	void DoFloodFill() { simulation->DoFloodFill(); }
 	void OnRightMouseUp();
 	void ProcessWindowResize();
 

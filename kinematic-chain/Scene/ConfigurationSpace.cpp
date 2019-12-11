@@ -10,6 +10,7 @@ ConfigurationSpace::ConfigurationSpace(std::shared_ptr<ConfigurationSpaceModel> 
 
 void ConfigurationSpace::UpdateParametrization(const std::vector<Obstacle>& obstacles)
 {
+	model->path.clear();
 	for (size_t i = 0; i < N; i++)
 		for (size_t j = 0; j < N; j++)
 		{
@@ -24,10 +25,24 @@ void ConfigurationSpace::UpdateParametrization(const std::vector<Obstacle>& obst
 
 void ConfigurationSpace::DoFloodFill(size_t start_arm1, size_t start_arm2, size_t end_arm1, size_t end_arm2)
 {
+	model->path.clear();
+
 	std::queue<tuple_int> queue;
 	queue.push(tuple_int(pair_int(start_arm1, start_arm2), 0));
 
 	auto WrapF = [](int value, int precision) { return value < 0 ? value + precision : value % precision; };
+
+	for (size_t i = 0; i < N; i++)
+	{
+		for (size_t j = 0; j < N; j++)
+		{
+			if (model->distance[i][j] == model->obstacle)
+				continue;
+
+			model->distance[i][j] = model->no_data;
+		}
+	}
+
 	while (!queue.empty())
 	{
 		tuple_int p = queue.front();
@@ -61,8 +76,14 @@ void ConfigurationSpace::DoFloodFill(size_t start_arm1, size_t start_arm2, size_
 	{
 		for (size_t j = 0; j < N; j++)
 		{
-			if (model->distance[i][j] == model->obstacle || model->distance[i][j] == model->no_data)
+			if (model->distance[i][j] == model->obstacle)
 				continue;
+
+			if (model->distance[i][j] == model->no_data)
+			{
+				model->colors[i][j] = glm::vec3(0);
+				continue;
+			}
 
 			model->colors[i][j] = glm::vec3(1.0 - model->distance[i][j] / (float)value);
 		}
@@ -71,7 +92,7 @@ void ConfigurationSpace::DoFloodFill(size_t start_arm1, size_t start_arm2, size_
 	model->path.clear();
 	if (model->distance[end_arm1][end_arm2] != -1)
 	{
-		
+
 		model->path.push_back(end_arm1);
 		model->path.push_back(end_arm2);;
 
