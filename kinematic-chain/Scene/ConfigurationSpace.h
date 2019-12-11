@@ -130,7 +130,7 @@ private:
 	bool Collides2(const Obstacle& obstacle, float arm1_angle, float arm2_angle)
 	{
 		Arm& arm1 = robot_model->GetStartRef().GetArm1Ref();
-		Arm& arm2 = robot_model->GetStartRef().GetArm1Ref();
+		Arm& arm2 = robot_model->GetStartRef().GetArm2Ref();
 
 		float vx = glm::cos(glm::radians(arm1_angle + arm2_angle)) * arm2.GetLength();
 		float vy = glm::sin(glm::radians(arm1_angle + arm2_angle)) * arm2.GetLength();
