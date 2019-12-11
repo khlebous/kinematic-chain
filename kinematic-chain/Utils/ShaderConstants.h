@@ -12,4 +12,5 @@ public:
 
 	static std::string COLOR;
 	static std::string POINT_SIZE;
+	static std::string OPACITY;
 };

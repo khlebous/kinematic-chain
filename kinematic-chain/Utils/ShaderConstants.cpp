@@ -8,3 +8,4 @@ std::string ShaderConstants::PROJECTION_MTX = "proj";
 
 std::string ShaderConstants::COLOR = "color";
 std::string ShaderConstants::POINT_SIZE = "pointSize";
+std::string ShaderConstants::OPACITY = "opacity";

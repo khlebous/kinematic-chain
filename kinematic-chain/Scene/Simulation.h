@@ -24,7 +24,7 @@ public:
 	Obstacle& GetObstacle(size_t idx) { return obstacles[idx]; };
 	void DeleteObstacle(size_t idx) { obstacles.erase(obstacles.begin() + idx); }
 	void AddObstacle(const Obstacle& _o) { obstacles.push_back(_o); }
-	void UpdateParametrization() { robot->UpdateParametrization(obstacles); }
+	void UpdateParametrization();
 	void DoFloodFill() { robot->DoFloodFill(); }
 
 	void Update(float delta_time);
@@ -33,6 +33,4 @@ public:
 	void StartSimulation();
 	void PauseSimulation();
 	void StopSimulation();
-
-private:
 };
