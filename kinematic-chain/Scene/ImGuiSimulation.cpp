@@ -122,23 +122,24 @@ void ImGuiSimulation::RenderEditMode()
 
 	ImGui::Separator();
 
-	if (ImGui::Button("Update scene"))
-	{
-		simulation->UpdateParametrization();
-	}
-
-	ImGui::Separator();
-
 	ImGui::Text("Obstacles");
 	size_t obstacle_idx_to_delete = -1;
+	bool obstacle_changed = false;
+
 	for (size_t i = 0; i < simulation->GetObstaclesSize(); i++)
 	{
 		if (ImGui::TreeNode(("obstacle" + std::to_string(i)).c_str()))
 		{
 			ObstacleModel* model = simulation->GetObstacle(i).GetModel();
-			ImGui::DragFloat2(("position" + std::to_string(i)).c_str(), &model->GetPositionRef()[0]);
-			ImGui::DragFloat2(("size" + std::to_string(i)).c_str(), &model->GetSizeRef()[0]);
-			ImGui::ColorEdit3(("color" + std::to_string(i)).c_str(), &model->GetColorRef()[0]);
+			if (ImGui::DragFloat2(("position" + std::to_string(i)).c_str(), &model->GetPositionRef()[0]))
+				obstacle_changed = true;
+			
+			if (ImGui::DragFloat2(("size" + std::to_string(i)).c_str(), &model->GetSizeRef()[0]))
+				obstacle_changed = true;
+
+			if(ImGui::ColorEdit3(("color" + std::to_string(i)).c_str(), &model->GetColorRef()[0]))
+				obstacle_changed = true;
+
 			if (ImGui::Button(("delete obstacle" + std::to_string(i)).c_str()))
 				obstacle_idx_to_delete = i;
 			ImGui::TreePop();
@@ -148,12 +149,21 @@ void ImGuiSimulation::RenderEditMode()
 	if (obstacle_idx_to_delete != -1)
 	{
 		simulation->DeleteObstacle(obstacle_idx_to_delete);
+		obstacle_changed = true;
 	}
 }
 
 void ImGuiSimulation::RenderPathFindingMode()
 {
 	ImGui::Text("Path finding mode");
+
+	if (ImGui::Button("Update configuration space"))
+	{
+		simulation->UpdateParametrization();
+	}
+
+	ImGui::Separator();
+
 	if (ImGui::Button("Flood fill"))
 	{
 		simulation->DoFloodFill();

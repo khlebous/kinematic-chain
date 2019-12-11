@@ -36,10 +36,14 @@ public:
 	void ProcessWindowResize() { configuration_space->OnWindowSizeChanged(); }
 	void ProcessFirstConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetStartRef(), xpos, ypos); }
 	void ProcessSecondConfiguration(float xpos, float ypos) { ProcessConfiguration(model->GetEndRef(), xpos, ypos); }
+	void ProcessAlternativeFirstConfiguration() { model->GetStartRef().Switch(); }
+	void ProcessAlternativeSecondConfiguration() { model->GetEndRef().Switch(); }
 	void DoFloodFill();
 	void UpdateCurrentConfiguration(float simulation_percentage);
+	void CheckRobotConfigurationsCorrect();
 
 private:
 	glm::vec4 GetNewParametrizations(float x, float y);
 	void ProcessConfiguration(RobotConfiguration& configuration, float xpos, float ypos);
+	void CheckRobotConfigurationsCorrect(RobotConfiguration& configuration);
 };

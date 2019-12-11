@@ -26,8 +26,8 @@ float last_y = WindowConstants::HEIGHT / 2.0f;
 
 bool mouse_right_button_down = false;
 bool key_o_down = false;
-bool key_f_down = false;
-bool key_s_down = false;
+bool key_1_down = false;
+bool key_2_down = false;
 bool first_mouse = true;
 
 // timing
@@ -198,9 +198,9 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		if (action == GLFW_PRESS)
 		{
 			mouse_right_button_down = true;
-			if (key_f_down)
+			if (key_1_down)
 				sceneController->ProcessFirstConfiguration(last_x, last_y);
-			else if (key_s_down)
+			else if (key_2_down)
 				sceneController->ProcessSecondConfiguration(last_x, last_y);
 		}
 		else if (action == GLFW_RELEASE)
@@ -215,19 +215,43 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
 	if (key == GLFW_KEY_O)
 	{
-		if (action == GLFW_PRESS) key_o_down = true;
-		else if (action == GLFW_RELEASE) key_o_down = false;
+		if (action == GLFW_PRESS)
+		{
+			key_o_down = true;
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			key_o_down = false;
+		}
 	}
 
-	if (key == GLFW_KEY_F)
+	if (key == GLFW_KEY_1)
 	{
-		if (action == GLFW_PRESS) key_f_down = true;
-		else if (action == GLFW_RELEASE) key_f_down = false;
+		if (action == GLFW_PRESS) key_1_down = true;
+		else if (action == GLFW_RELEASE) key_1_down = false;
 	}
 
-	if (key == GLFW_KEY_S)
+	if (key == GLFW_KEY_Q)
 	{
-		if (action == GLFW_PRESS) key_s_down = true;
-		else if (action == GLFW_RELEASE) key_s_down = false;
+		if (action == GLFW_PRESS)
+		{
+			if (!mouse_right_button_down)
+				sceneController->ProcessAlternativeFirstConfiguration();
+		}
+	}
+
+	if (key == GLFW_KEY_2)
+	{
+		if (action == GLFW_PRESS) key_2_down = true;
+		else if (action == GLFW_RELEASE) key_2_down = false;
+	}
+
+	if (key == GLFW_KEY_W)
+	{
+		if (action == GLFW_PRESS)
+		{
+			if (!mouse_right_button_down)
+				sceneController->ProcessAlternativeSecondConfiguration();
+		}
 	}
 }

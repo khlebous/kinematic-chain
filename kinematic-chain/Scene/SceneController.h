@@ -33,6 +33,8 @@ public:
 	void ProcessObstacle(float xpos, float ypos);
 	void ProcessFirstConfiguration(float xpos, float ypos);
 	void ProcessSecondConfiguration(float xpos, float ypos);
+	void ProcessAlternativeFirstConfiguration() { simulation->GetRobot()->ProcessAlternativeFirstConfiguration(); }
+	void ProcessAlternativeSecondConfiguration() { simulation->GetRobot()->ProcessAlternativeSecondConfiguration(); }
 	void OnRightMouseUp();
 	void ProcessWindowResize();
 

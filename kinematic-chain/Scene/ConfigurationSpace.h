@@ -9,6 +9,7 @@
 
 #include "ConfigurationSpaceModel.h"
 #include "ConfigurationSpaceView.h"
+#include "..//Utils/EulerUtils.h"
 #define N 360
 
 class ConfigurationSpace
@@ -30,6 +31,13 @@ public:
 	size_t GetPathSize() { return model->path.size() / 2; }
 	float GetPathElementX(size_t idx) { return model->path[2 * idx]; }
 	float GetPathElementY(size_t idx) { return model->path[2 * idx + 1]; }
+	bool IsOcupatedWithObstacle(const glm::vec2& pos)
+	{
+		size_t x = EulerUtils::GetCorrectedAngle(pos.x);
+		size_t y = EulerUtils::GetCorrectedAngle(pos.y);
+
+		return model->distance[x][y] == model->obstacle;
+	}
 
 private:
 	bool Collides(const std::vector<float>& p, const std::vector<float>& q)

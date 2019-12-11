@@ -12,6 +12,12 @@ Simulation::Simulation(std::shared_ptr<Robot> _r)
 	simulation_speed = 1.0f;
 }
 
+void Simulation::UpdateParametrization()
+{
+	robot->UpdateParametrization(obstacles); 
+	robot->CheckRobotConfigurationsCorrect();
+}
+
 void Simulation::Update(float delta_time)
 {
 	if (!isSimulating || isPaused)

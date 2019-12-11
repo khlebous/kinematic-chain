@@ -44,6 +44,12 @@ void Robot::UpdateCurrentConfiguration(float simulation_percentage)
 	model->GetCurrentRef().GetArm2Ref().SetAngle(glm::radians(EulerUtils::GetEulerRotation(a3, a4, new_persentage)));
 }
 
+void Robot::CheckRobotConfigurationsCorrect()
+{
+	CheckRobotConfigurationsCorrect(model->GetStartRef());
+	CheckRobotConfigurationsCorrect(model->GetEndRef());
+}
+
 glm::vec4 Robot::GetNewParametrizations(float x, float y)
 {
 	float l1 = model->GetStartRef().GetArm1Ref().GetLength();
@@ -74,15 +80,38 @@ void Robot::ProcessConfiguration(RobotConfiguration& configuration, float xpos, 
 		glm::length(pos) < configuration.GetArm1Ref().GetLength() - configuration.GetArm2Ref().GetLength())
 	{
 		configuration.SetIsCorrect(false);
+		configuration.SetIsCorrectAlternative(false);
 		return;
 	}
 
-	configuration.SetIsCorrect(true);
 	glm::vec4 param = GetNewParametrizations(pos.x, pos.y);
-
 	configuration.GetArm1Ref().SetAngle(param.x);
 	configuration.GetArm2Ref().SetAngle(param.y);
-
 	configuration.GetArm1Ref().SetAlthernativeAngle(param.z);
 	configuration.GetArm2Ref().SetAlthernativeAngle(param.w);
+
+	CheckRobotConfigurationsCorrect(configuration);
+}
+
+void Robot::CheckRobotConfigurationsCorrect(RobotConfiguration& configuration)
+{
+	if (configuration_space->IsOcupatedWithObstacle(glm::degrees(
+		glm::vec2(configuration.GetArm1Ref().GetAngle(), configuration.GetArm2Ref().GetAngle()))))
+	{
+		configuration.SetIsCorrect(false);
+	}
+	else
+	{
+		configuration.SetIsCorrect(true);
+	}
+
+	if (configuration_space->IsOcupatedWithObstacle(glm::degrees(
+		glm::vec2(configuration.GetArm1Ref().GetAlthernativeAngle(), configuration.GetArm2Ref().GetAlthernativeAngle()))))
+	{
+		configuration.SetIsCorrectAlternative(false);
+	}
+	else
+	{
+		configuration.SetIsCorrectAlternative(true);
+	}
 }
