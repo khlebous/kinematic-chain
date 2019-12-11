@@ -10,6 +10,7 @@ ConfigurationSpace::ConfigurationSpace(std::shared_ptr<ConfigurationSpaceModel> 
 
 void ConfigurationSpace::UpdateParametrization(const std::vector<Obstacle>& obstacles)
 {
+	model->path.clear();
 	for (size_t i = 0; i < N; i++)
 		for (size_t j = 0; j < N; j++)
 		{
@@ -24,6 +25,8 @@ void ConfigurationSpace::UpdateParametrization(const std::vector<Obstacle>& obst
 
 void ConfigurationSpace::DoFloodFill(size_t start_arm1, size_t start_arm2, size_t end_arm1, size_t end_arm2)
 {
+	model->path.clear();
+
 	std::queue<tuple_int> queue;
 	queue.push(tuple_int(pair_int(start_arm1, start_arm2), 0));
 
