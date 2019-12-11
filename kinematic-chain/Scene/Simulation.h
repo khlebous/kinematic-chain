@@ -34,8 +34,8 @@ public:
 		if (!rm->GetStartRef().GetIsCorrect() || !rm->GetEndRef().GetIsCorrect())
 			return;
 
-		robot->DoFloodFill(); }
-
+		robot->DoFloodFill(); 
+	}
 
 	void Update(float delta_time);
 	void Render();

@@ -54,6 +54,12 @@ void Simulation::StartSimulation()
 	isSimulating = true;
 	isPaused = false;
 
+	robot->GetModel()->GetCurrentRef().GetArm1Ref().SetLength(
+		robot->GetModel()->GetStartRef().GetArm1Ref().GetLength());
+
+	robot->GetModel()->GetCurrentRef().GetArm2Ref().SetLength(
+		robot->GetModel()->GetStartRef().GetArm2Ref().GetLength());
+
 	//model->ResetParametres();
 }
 
