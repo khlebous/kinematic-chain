@@ -262,4 +262,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			sceneController->UpdateConfigurationSpace();
 		}
 	}
+
+	if (key == GLFW_KEY_F)
+	{
+		if (action == GLFW_PRESS)
+		{
+			sceneController->DoFloodFill();
+		}
+	}
 }

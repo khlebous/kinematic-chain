@@ -173,5 +173,7 @@ void ImGuiSimulation::RenderPathFindingMode()
 	{
 		simulation->DoFloodFill();
 	}
+	ImGui::SameLine();
+	ImGuiUtils::HelpMarker("Press F to update. Flood fill is done for current configuration space.");
 	if (!can_flood_fill) ImGuiUtils::PopDisabled();
 }
